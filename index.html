@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>TacTic Solutions — petits outils sur mesure</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+body{margin:0}
+html{scroll-behavior:smooth}
+a{color:#1F6B4B}a:hover{color:#16211C}
+summary{cursor:pointer}
+.spin-slow{transform-box:fill-box;transform-origin:center;animation:spin 90s linear infinite}
+.spin-rev{transform-box:fill-box;transform-origin:center;animation:spin 40s linear infinite reverse}
+.spin-fast{transform-box:fill-box;transform-origin:center;animation:spin 22s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.stage{position:relative;height:250px;border-radius:14px;overflow:hidden;background:#FFFFFF;border:1px solid #D9DED8}
+.box{position:absolute;left:50%;top:50%;width:380px;height:220px;margin:-110px 0 0 -190px}
+@media (max-width:420px){.box{transform:scale(.82)}}
+.abs{position:absolute}
+.cur{width:20px;height:24px}
+.a1-btn{animation:a1btn 8s infinite}
+@keyframes a1btn{0%,8%{opacity:0;transform:scale(.5)}15%{opacity:1;transform:scale(1.12)}19%,100%{opacity:1;transform:scale(1)}}
+.a1-cur{animation:a1cur 8s infinite}
+@keyframes a1cur{0%,18%{opacity:0;transform:translate(150px,120px)}22%{opacity:1}36%{transform:translate(0,0)}40%{transform:scale(.8)}44%,90%{opacity:1;transform:none}96%,100%{opacity:0}}
+.a1-ring{animation:a1ring 8s infinite;opacity:0}
+@keyframes a1ring{0%,39%{opacity:0;transform:scale(.4)}42%{opacity:.9}54%,100%{opacity:0;transform:scale(2)}}
+.a1-file{animation:a1file 8s infinite}
+@keyframes a1file{0%,45%{opacity:0;transform:translateY(40px)}53%,92%{opacity:1;transform:none}98%,100%{opacity:0}}
+.grow{transform-origin:left;animation:grow 8s infinite}
+@keyframes grow{0%,53%{transform:scaleX(0)}62%,100%{transform:scaleX(1)}}
+.d1{animation-delay:.25s}.d2{animation-delay:.5s}.d3{animation-delay:.75s}
+.a2-scan{animation:a2scan 8s infinite}
+@keyframes a2scan{0%{transform:translateY(0);opacity:0}4%{opacity:.9}30%{transform:translateY(130px);opacity:.9}34%,100%{opacity:0;transform:translateY(130px)}}
+.a2-old{animation:a2old 8s infinite}
+@keyframes a2old{0%,32%{opacity:1}36%,92%{opacity:0}97%,100%{opacity:1}}
+.a2-new{animation:a2new 8s infinite}
+@keyframes a2new{0%,32%{opacity:0}36%,92%{opacity:1}97%,100%{opacity:0}}
+.a2-toast{animation:a2toast 8s infinite}
+@keyframes a2toast{0%,38%{opacity:0;transform:translateX(140px)}45%,90%{opacity:1;transform:none}96%,100%{opacity:0;transform:translateX(140px)}}
+.a2-bell{transform-origin:50% 10%;animation:a2bell 8s infinite}
+@keyframes a2bell{0%,45%{transform:none}48%{transform:rotate(18deg)}51%{transform:rotate(-16deg)}54%{transform:rotate(10deg)}57%,100%{transform:none}}
+.a3-cur{animation:a3cur 8s infinite}
+@keyframes a3cur{0%{opacity:0;transform:translate(60px,90px)}6%{opacity:1}16%{transform:none}19%{transform:scale(.8)}22%{transform:none;opacity:1}30%,100%{opacity:0}}
+.a3-press{animation:a3press 8s infinite}
+@keyframes a3press{0%,17%{background:#1F6B4B}19%{background:#F2C14E;color:#16211C}24%,100%{background:#1F6B4B}}
+.chip{animation:a3chip 8s infinite}
+@keyframes a3chip{0%,22%{opacity:0;transform:translate(-200px,0)}26%{opacity:1;transform:translate(-200px,0)}42%,92%{opacity:1;transform:none}98%,100%{opacity:0}}
+.c2{animation-delay:.35s}.c3{animation-delay:.7s}
+.a3-ok{animation:a3ok 8s infinite}
+@keyframes a3ok{0%,58%{opacity:0;transform:translateY(8px)}64%,92%{opacity:1;transform:none}98%,100%{opacity:0}}
+.f{animation:a4f 8s infinite}
+@keyframes a4f{0%,24%{opacity:1;transform:none}46%,100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(.35) rotate(0deg)}}
+.f2{animation-delay:.15s}.f3{animation-delay:.3s}.f4{animation-delay:.45s}.f5{animation-delay:.6s}
+.fold{animation:a4fold 8s infinite}
+@keyframes a4fold{0%,36%{transform:none}42%{transform:scale(1.08)}48%,100%{transform:none}}
+.count{animation:a4count 8s infinite steps(1,end)}
+@keyframes a4count{0%{transform:translateY(0)}28%{transform:translateY(-22px)}34%{transform:translateY(-44px)}40%{transform:translateY(-66px)}46%,96%{transform:translateY(-88px)}100%{transform:translateY(0)}}
+.a4-name{animation:a4name 8s infinite}
+@keyframes a4name{0%,52%{opacity:0;transform:translateY(10px)}58%,92%{opacity:1;transform:none}98%,100%{opacity:0}}
+.a5-env{animation:a5env 8s infinite}
+@keyframes a5env{0%{opacity:0;transform:translateY(-70px)}12%,92%{opacity:1;transform:none}98%,100%{opacity:0}}
+.m{animation:a5m 8s infinite}
+@keyframes a5m{0%,18%{opacity:0;transform:translate(var(--mx),-95px) scale(.8)}24%{opacity:1;transform:translate(var(--mx),-95px)}44%,92%{opacity:1;transform:none}98%,100%{opacity:0}}
+.m2{animation-delay:.3s}.m3{animation-delay:.6s}
+.a5-row{animation:a5row 8s infinite}
+@keyframes a5row{0%,44%{background:#FFFFFF}50%,92%{background:#FFF6DA}100%{background:#FFFFFF}}
+.a6-i{animation:a6i 8s infinite both}
+@keyframes a6i{0%,44%{border-color:#DCE2DD;background:#FFFFFF}48%,92%{border-color:#9CC5A9;background:#F1FAF5}98%,100%{border-color:#DCE2DD;background:#FFFFFF}}
+.a6-t{animation:a6t 8s infinite both}
+@keyframes a6t{0%,44%{opacity:0;transform:translateX(-6px)}48%,92%{opacity:1;transform:none}98%,100%{opacity:0;transform:none}}
+.g1{animation-delay:0s}.g2{animation-delay:.3s}.g3{animation-delay:.6s}.g4{animation-delay:.9s}
+.a6-chk{animation:a6chk 8s infinite both}
+@keyframes a6chk{0%,58%{opacity:0;transform:scale(.4)}62%,92%{opacity:1;transform:none}98%,100%{opacity:0}}
+.a7-v{animation:a7v 8s infinite both}
+@keyframes a7v{0%,22%{opacity:0;transform:translate(-170px,0)}26%{opacity:1;transform:translate(-170px,0)}42%,92%{opacity:1;transform:none}98%,100%{opacity:0}}
+.a7-e{animation:a7e 8s infinite both}
+@keyframes a7e{0%,46%{opacity:0;transform:scale(.6)}52%,92%{opacity:1;transform:none}98%,100%{opacity:0}}
+.a7-ok{animation:a7ok 8s infinite both}
+@keyframes a7ok{0%,70%{opacity:0;transform:translateY(8px)}76%,92%{opacity:1;transform:none}98%,100%{opacity:0}}
+.a8-r{animation:a8r 8s infinite both}
+@keyframes a8r{0%,24%{background:#FFFFFF}28%,38%{background:#FFF6DA}42%,100%{background:#FFFFFF}}
+.a8-f{animation:a8f 8s infinite both}
+@keyframes a8f{0%,24%{opacity:0;transform:translateX(-30px)}28%,92%{opacity:1;transform:none}98%,100%{opacity:0}}
+.a8-ok{animation:a8ok 8s infinite both}
+@keyframes a8ok{0%,46%{opacity:0;transform:translateY(8px)}52%,92%{opacity:1;transform:none}98%,100%{opacity:0}}
+@media (prefers-reduced-motion: reduce){.stage *, svg g{animation:none !important}}
+</style>
+</head>
+<body>
+<div style="font-family: Inter, system-ui, sans-serif; color: #16211C; background: #F6F7F4; font-size: 17px; line-height: 1.55; overflow-x: hidden">
+
+<header style="background: #F6F7F4; border-bottom: 1px solid #D9DED8; position: relative; z-index: 2">
+<div style="max-width: 1120px; margin: 0 auto; padding: 14px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
+<a href="#" aria-label="TacTic Solutions, retour en haut de page" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: #16211C">
+<svg aria-hidden="true" width="56" height="56" viewBox="0 0 64 64" fill="none" stroke-linecap="round" stroke-linejoin="round" style="flex: none; display: block"><circle cx="28" cy="28" r="23" stroke="#16211C" stroke-width="4"></circle><path d="M28 8v3.5M48 28h-3.5M28 48v-3.5M8 28h3.5" stroke="#16211C" stroke-width="3"></path><path d="M20 23.5L28 29L37 13" stroke="#1F6B4B" stroke-width="5"></path><circle cx="28" cy="29" r="2.4" fill="#16211C"></circle><path d="M49.0 37.0L51.3 37.2L52.3 41.1L53.7 41.9L57.5 40.5L59.0 42.3L56.9 45.7L57.3 47.3L61.0 49.0L60.8 51.3L56.9 52.3L56.1 53.7L57.5 57.5L55.7 59.0L52.3 56.9L50.7 57.3L49.0 61.0L46.7 60.8L45.7 56.9L44.3 56.1L40.5 57.5L39.0 55.7L41.1 52.3L40.7 50.7L37.0 49.0L37.2 46.7L41.1 45.7L41.9 44.3L40.5 40.5L42.3 39.0L45.7 41.1L47.3 40.7Z" fill="#F6F7F4" stroke="#16211C" stroke-width="3"></path><circle cx="49" cy="49" r="3.6" fill="#1F6B4B"></circle></svg>
+<span style="display: flex; flex-direction: column; line-height: 1"><span style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 30px; letter-spacing: -0.01em">Tac<span style="color: #1F6B4B">Tic</span></span><span style="font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #4D5A53; margin-top: 5px">Solutions</span></span>
+</a>
+<nav aria-label="Navigation principale" style="display: flex; flex-wrap: wrap; align-items: center; gap: 24px; font-size: 15px">
+<a href="#exemples" style="color: #16211C; text-decoration: none; padding: 12px 0">Exemples</a>
+<a href="#prix" style="color: #16211C; text-decoration: none; padding: 12px 0">Prix</a>
+<a href="#qui" style="color: #16211C; text-decoration: none; padding: 12px 0">Qui je suis</a>
+<a href="#contact" style="background: #1F6B4B; color: #FFFFFF; text-decoration: none; padding: 12px 20px; border-radius: 8px; font-weight: 600">Décrire ma tâche</a>
+</nav>
+</div>
+</header>
+
+<div style="position: relative; overflow: hidden">
+<svg aria-hidden="true" width="760" height="760" viewBox="-40 -40 760 760" fill="none" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; right: -230px; top: -120px; pointer-events: none"><g class="spin-slow"><path d="M300.0 10.0L312.6 10.3L322.8 39.0L334.2 40.2L350.4 14.4L362.8 16.9L367.8 46.9L378.8 50.1L399.2 27.5L411.0 32.1L410.7 62.5L421.0 67.6L445.0 48.9L455.8 55.4L450.3 85.4L459.5 92.1L486.4 77.8L495.9 86.2L485.3 114.7L493.2 123.0L522.2 113.6L530.1 123.5L514.6 149.7L521.0 159.2L551.1 155.0L557.2 166.1L537.5 189.3L542.1 199.7L572.5 200.8L576.6 212.8L553.1 232.2L555.8 243.3L585.6 249.6L587.5 262.1L561.0 277.2L561.8 288.6L590.0 300.0L589.7 312.6L561.0 322.8L559.8 334.2L585.6 350.4L583.1 362.8L553.1 367.8L549.9 378.8L572.5 399.2L567.9 411.0L537.5 410.7L532.4 421.0L551.1 445.0L544.6 455.8L514.6 450.3L507.9 459.5L522.2 486.4L513.8 495.9L485.3 485.3L477.0 493.2L486.4 522.2L476.5 530.1L450.3 514.6L440.8 521.0L445.0 551.1L433.9 557.2L410.7 537.5L400.3 542.1L399.2 572.5L387.2 576.6L367.8 553.1L356.7 555.8L350.4 585.6L337.9 587.5L322.8 561.0L311.4 561.8L300.0 590.0L287.4 589.7L277.2 561.0L265.8 559.8L249.6 585.6L237.2 583.1L232.2 553.1L221.2 549.9L200.8 572.5L189.0 567.9L189.3 537.5L179.0 532.4L155.0 551.1L144.2 544.6L149.7 514.6L140.5 507.9L113.6 522.2L104.1 513.8L114.7 485.3L106.8 477.0L77.8 486.4L69.9 476.5L85.4 450.3L79.0 440.8L48.9 445.0L42.8 433.9L62.5 410.7L57.9 400.3L27.5 399.2L23.4 387.2L46.9 367.8L44.2 356.7L14.4 350.4L12.5 337.9L39.0 322.8L38.2 311.4L10.0 300.0L10.3 287.4L39.0 277.2L40.2 265.8L14.4 249.6L16.9 237.2L46.9 232.2L50.1 221.2L27.5 200.8L32.1 189.0L62.5 189.3L67.6 179.0L48.9 155.0L55.4 144.2L85.4 149.7L92.1 140.5L77.8 113.6L86.2 104.1L114.7 114.7L123.0 106.8L113.6 77.8L123.5 69.9L149.7 85.4L159.2 79.0L155.0 48.9L166.1 42.8L189.3 62.5L199.7 57.9L200.8 27.5L212.8 23.4L232.2 46.9L243.3 44.2L249.6 14.4L262.1 12.5L277.2 39.0L288.6 38.2Z" stroke="#D3E0D8" stroke-width="4"></path></g><circle cx="300" cy="300" r="240" stroke="#D3E0D8" stroke-width="3"></circle><path d="M300.0 68.0L300.0 102.0" stroke="#C7D6CD" stroke-width="5"></path><path d="M324.3 69.3L322.8 83.2" stroke="#C7D6CD" stroke-width="2"></path><path d="M348.2 73.1L345.3 86.8" stroke="#C7D6CD" stroke-width="2"></path><path d="M371.7 79.4L367.4 92.7" stroke="#C7D6CD" stroke-width="2"></path><path d="M394.4 88.1L388.7 100.8" stroke="#C7D6CD" stroke-width="2"></path><path d="M416.0 99.1L399.0 128.5" stroke="#C7D6CD" stroke-width="5"></path><path d="M436.4 112.3L428.1 123.6" stroke="#C7D6CD" stroke-width="2"></path><path d="M455.2 127.6L445.9 138.0" stroke="#C7D6CD" stroke-width="2"></path><path d="M472.4 144.8L462.0 154.1" stroke="#C7D6CD" stroke-width="2"></path><path d="M487.7 163.6L476.4 171.9" stroke="#C7D6CD" stroke-width="2"></path><path d="M500.9 184.0L471.5 201.0" stroke="#C7D6CD" stroke-width="5"></path><path d="M511.9 205.6L499.2 211.3" stroke="#C7D6CD" stroke-width="2"></path><path d="M520.6 228.3L507.3 232.6" stroke="#C7D6CD" stroke-width="2"></path><path d="M526.9 251.8L513.2 254.7" stroke="#C7D6CD" stroke-width="2"></path><path d="M530.7 275.7L516.8 277.2" stroke="#C7D6CD" stroke-width="2"></path><path d="M532.0 300.0L498.0 300.0" stroke="#C7D6CD" stroke-width="5"></path><path d="M530.7 324.3L516.8 322.8" stroke="#C7D6CD" stroke-width="2"></path><path d="M526.9 348.2L513.2 345.3" stroke="#C7D6CD" stroke-width="2"></path><path d="M520.6 371.7L507.3 367.4" stroke="#C7D6CD" stroke-width="2"></path><path d="M511.9 394.4L499.2 388.7" stroke="#C7D6CD" stroke-width="2"></path><path d="M500.9 416.0L471.5 399.0" stroke="#C7D6CD" stroke-width="5"></path><path d="M487.7 436.4L476.4 428.1" stroke="#C7D6CD" stroke-width="2"></path><path d="M472.4 455.2L462.0 445.9" stroke="#C7D6CD" stroke-width="2"></path><path d="M455.2 472.4L445.9 462.0" stroke="#C7D6CD" stroke-width="2"></path><path d="M436.4 487.7L428.1 476.4" stroke="#C7D6CD" stroke-width="2"></path><path d="M416.0 500.9L399.0 471.5" stroke="#C7D6CD" stroke-width="5"></path><path d="M394.4 511.9L388.7 499.2" stroke="#C7D6CD" stroke-width="2"></path><path d="M371.7 520.6L367.4 507.3" stroke="#C7D6CD" stroke-width="2"></path><path d="M348.2 526.9L345.3 513.2" stroke="#C7D6CD" stroke-width="2"></path><path d="M324.3 530.7L322.8 516.8" stroke="#C7D6CD" stroke-width="2"></path><path d="M300.0 532.0L300.0 498.0" stroke="#C7D6CD" stroke-width="5"></path><path d="M275.7 530.7L277.2 516.8" stroke="#C7D6CD" stroke-width="2"></path><path d="M251.8 526.9L254.7 513.2" stroke="#C7D6CD" stroke-width="2"></path><path d="M228.3 520.6L232.6 507.3" stroke="#C7D6CD" stroke-width="2"></path><path d="M205.6 511.9L211.3 499.2" stroke="#C7D6CD" stroke-width="2"></path><path d="M184.0 500.9L201.0 471.5" stroke="#C7D6CD" stroke-width="5"></path><path d="M163.6 487.7L171.9 476.4" stroke="#C7D6CD" stroke-width="2"></path><path d="M144.8 472.4L154.1 462.0" stroke="#C7D6CD" stroke-width="2"></path><path d="M127.6 455.2L138.0 445.9" stroke="#C7D6CD" stroke-width="2"></path><path d="M112.3 436.4L123.6 428.1" stroke="#C7D6CD" stroke-width="2"></path><path d="M99.1 416.0L128.5 399.0" stroke="#C7D6CD" stroke-width="5"></path><path d="M88.1 394.4L100.8 388.7" stroke="#C7D6CD" stroke-width="2"></path><path d="M79.4 371.7L92.7 367.4" stroke="#C7D6CD" stroke-width="2"></path><path d="M73.1 348.2L86.8 345.3" stroke="#C7D6CD" stroke-width="2"></path><path d="M69.3 324.3L83.2 322.8" stroke="#C7D6CD" stroke-width="2"></path><path d="M68.0 300.0L102.0 300.0" stroke="#C7D6CD" stroke-width="5"></path><path d="M69.3 275.7L83.2 277.2" stroke="#C7D6CD" stroke-width="2"></path><path d="M73.1 251.8L86.8 254.7" stroke="#C7D6CD" stroke-width="2"></path><path d="M79.4 228.3L92.7 232.6" stroke="#C7D6CD" stroke-width="2"></path><path d="M88.1 205.6L100.8 211.3" stroke="#C7D6CD" stroke-width="2"></path><path d="M99.1 184.0L128.5 201.0" stroke="#C7D6CD" stroke-width="5"></path><path d="M112.3 163.6L123.6 171.9" stroke="#C7D6CD" stroke-width="2"></path><path d="M127.6 144.8L138.0 154.1" stroke="#C7D6CD" stroke-width="2"></path><path d="M144.8 127.6L154.1 138.0" stroke="#C7D6CD" stroke-width="2"></path><path d="M163.6 112.3L171.9 123.6" stroke="#C7D6CD" stroke-width="2"></path><path d="M184.0 99.1L201.0 128.5" stroke="#C7D6CD" stroke-width="5"></path><path d="M205.6 88.1L211.3 100.8" stroke="#C7D6CD" stroke-width="2"></path><path d="M228.3 79.4L232.6 92.7" stroke="#C7D6CD" stroke-width="2"></path><path d="M251.8 73.1L254.7 86.8" stroke="#C7D6CD" stroke-width="2"></path><path d="M275.7 69.3L277.2 83.2" stroke="#C7D6CD" stroke-width="2"></path><path d="M215 245L300 305L395 135" stroke="#C7D6CD" stroke-width="24"></path><circle cx="300" cy="305" r="14" fill="#C7D6CD"></circle><g transform="translate(70 610)"><g class="spin-rev"><path d="M0.0 -118.0L13.2 -117.3L20.5 -89.7L30.4 -86.8L51.2 -106.3L62.8 -99.9L57.4 -71.9L65.1 -65.1L92.3 -73.6L99.9 -62.8L82.9 -39.9L86.8 -30.4L115.0 -26.3L117.3 -13.2L92.0 -0.0L91.4 10.3L115.0 26.3L111.4 39.0L82.9 39.9L77.9 48.9L92.3 73.6L83.4 83.4L57.4 71.9L48.9 77.9L51.2 106.3L39.0 111.4L20.5 89.7L10.3 91.4L0.0 118.0L-13.2 117.3L-20.5 89.7L-30.4 86.8L-51.2 106.3L-62.8 99.9L-57.4 71.9L-65.1 65.1L-92.3 73.6L-99.9 62.8L-82.9 39.9L-86.8 30.4L-115.0 26.3L-117.3 13.2L-92.0 0.0L-91.4 -10.3L-115.0 -26.3L-111.4 -39.0L-82.9 -39.9L-77.9 -48.9L-92.3 -73.6L-83.4 -83.4L-57.4 -71.9L-48.9 -77.9L-51.2 -106.3L-39.0 -111.4L-20.5 -89.7L-10.3 -91.4Z" stroke="#D3E0D8" stroke-width="4"></path><circle r="34" stroke="#D3E0D8" stroke-width="4"></circle></g></g><g transform="translate(-60 470)"><g class="spin-fast"><path d="M0.0 -60.0L9.4 -59.3L13.6 -41.8L20.0 -39.2L35.3 -48.5L42.4 -42.4L35.6 -25.9L39.2 -20.0L57.1 -18.5L59.3 -9.4L44.0 -0.0L43.5 6.9L57.1 18.5L53.5 27.2L35.6 25.9L31.1 31.1L35.3 48.5L27.2 53.5L13.6 41.8L6.9 43.5L0.0 60.0L-9.4 59.3L-13.6 41.8L-20.0 39.2L-35.3 48.5L-42.4 42.4L-35.6 25.9L-39.2 20.0L-57.1 18.5L-59.3 9.4L-44.0 0.0L-43.5 -6.9L-57.1 -18.5L-53.5 -27.2L-35.6 -25.9L-31.1 -31.1L-35.3 -48.5L-27.2 -53.5L-13.6 -41.8L-6.9 -43.5Z" stroke="#DCE6E0" stroke-width="4"></path><circle r="16" stroke="#DCE6E0" stroke-width="4"></circle></g></g></svg>
+<section style="position: relative; max-width: 1120px; margin: 0 auto; padding: 64px 24px 56px; display: flex; flex-wrap: wrap; gap: 44px; align-items: center">
+<div style="flex: 1 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+<p style="margin: 0; align-self: flex-start; font-size: 14px; font-weight: 700; color: #16211C; background: #F2C14E; padding: 6px 14px; border-radius: 999px">Moins de clics, plus de temps pour votre métier</p>
+<h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(34px, 5vw, 52px); line-height: 1.08; letter-spacing: -0.01em">Les tâches répétitives de votre travail,<br>un petit outil peut les faire à votre place.</h1>
+<p style="margin: 0; font-size: 19px; color: #3E4B44; max-width: 560px">TacTic Solutions conçoit des outils sur mesure pour les indépendants et les petites entreprises : un bouton de plus dans votre navigateur ou dans Excel, qui fait en quelques secondes ce que vous faites à la main au quotidien.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center">
+<a href="#contact" style="background: #1F6B4B; color: #FFFFFF; text-decoration: none; padding: 16px 26px; border-radius: 8px; font-weight: 600; font-size: 18px">Décrire ma tâche en deux minutes</a>
+<a href="#exemples" style="color: #16211C; font-weight: 600; padding: 14px 4px">Voir les exemples animés</a>
+</div>
+<p style="margin: 0; display: flex; align-items: center; gap: 8px; font-size: 15px; color: #3E4B44"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F6B4B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>Basé à Nantes</p>
+</div>
+<figure style="flex: 1 1 400px; min-width: 0; max-width: 460px; margin: 0; background: #FFFFFF; border: 1px solid #D9DED8; border-radius: 18px; padding: 14px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 16px 36px rgba(22,33,28,.08)">
+<div class="stage" role="img" aria-label="Animation : un bouton Exporter la liste apparaît dans un logiciel en ligne, un clic produit le fichier.">
+<div class="box">
+<div class="abs" style="left: 0; top: 0; width: 380px; height: 220px; border: 1px solid #DCE2DD; border-radius: 10px; overflow: hidden; background: #FFFFFF">
+<div style="height: 26px; background: #F2EFE7; border-bottom: 1px solid #E2DED4; display: flex; align-items: center; gap: 5px; padding: 0 10px"><span style="width: 7px; height: 7px; border-radius: 50%; background: #E8A598"></span><span style="width: 7px; height: 7px; border-radius: 50%; background: #F2C14E"></span><span style="width: 7px; height: 7px; border-radius: 50%; background: #9CC5A9"></span><span style="font-size: 11px; color: #4D5A53; margin-left: 6px">Votre logiciel de gestion — Clients</span></div>
+<div style="padding: 12px; display: flex; gap: 6px; flex-wrap: wrap">
+<span style="font-size: 11px; padding: 5px 9px; border: 1px solid #DCE2DD; border-radius: 5px; color: #4D5A53">+ Nouveau</span>
+<span style="font-size: 11px; padding: 5px 9px; border: 1px solid #DCE2DD; border-radius: 5px; color: #4D5A53">Rechercher</span>
+<span class="a1-btn" style="position: relative; display: inline-block; font-size: 11px; padding: 5px 9px; border-radius: 5px; color: #FFFFFF; background: #1F6B4B; font-weight: 600">⤓ Exporter la liste<span class="a1-ring" style="position: absolute; inset: -6px; border: 2px solid #F2C14E; border-radius: 9px"></span></span>
+</div>
+<div style="padding: 0 12px; display: flex; flex-direction: column; gap: 9px"><div style="height: 7px; width: 88%; background: #E6EAE5; border-radius: 4px"></div><div style="height: 7px; width: 72%; background: #E6EAE5; border-radius: 4px"></div><div style="height: 7px; width: 80%; background: #E6EAE5; border-radius: 4px"></div><div style="height: 7px; width: 64%; background: #E6EAE5; border-radius: 4px"></div><div style="height: 7px; width: 76%; background: #E6EAE5; border-radius: 4px"></div></div>
+</div>
+<div class="abs a1-file" style="right: 10px; bottom: 10px; width: 150px; background: #FFFFFF; border: 1px solid #9CC5A9; border-radius: 8px; box-shadow: 0 8px 20px rgba(22,33,28,.15); padding: 9px">
+<p style="margin: 0 0 7px; font-size: 11px; font-weight: 700; color: #1F6B4B">liste-clients.xlsx</p>
+<div style="display: flex; flex-direction: column; gap: 5px"><div class="grow" style="height: 6px; background: #9CC5A9; border-radius: 3px"></div><div class="grow d1" style="height: 6px; background: #CFE3D5; border-radius: 3px"></div><div class="grow d2" style="height: 6px; background: #CFE3D5; border-radius: 3px"></div><div class="grow d3" style="height: 6px; background: #CFE3D5; border-radius: 3px"></div></div>
+</div>
+<svg class="abs cur a1-cur" aria-hidden="true" viewBox="0 0 20 24" style="left: 236px; top: 52px"><path d="M2 2v17l4.5-4.5 3.5 7.5 3.5-1.6-3.5-7.4H16z" fill="#16211C" stroke="#FFFFFF" stroke-width="1.5" stroke-linejoin="round"></path></svg>
+</div>
+</div>
+
+<figcaption style="padding: 0 6px 6px; font-size: 15px; color: #3E4B44"><strong style="color: #16211C">Exemple :</strong> votre logiciel en ligne ne sait pas sortir la liste des clients ? Un bouton « Exporter la liste » apparaît dans la page, et le fichier est prêt.</figcaption>
+</figure>
+</section>
+</div>
+
+<section aria-label="En un coup d'œil" style="background: #FFFFFF; border-top: 1px solid #D9DED8; border-bottom: 1px solid #D9DED8">
+<div style="max-width: 1120px; margin: 0 auto; padding: 36px 24px; display: flex; flex-direction: column; gap: 26px">
+<div style="display: flex; flex-wrap: wrap; gap: 16px">
+<div style="flex: 1 1 220px; min-width: 0; display: flex; gap: 14px; align-items: flex-start">
+<span style="width: 48px; height: 48px; border-radius: 50%; background: #E3EFE8; display: flex; align-items: center; justify-content: center; flex: none"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1F6B4B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.3-5.6"></path><path d="M20 4v5h-5"></path></svg></span>
+<div><p style="margin: 0; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #1F6B4B">Votre quotidien</p><p style="margin: 2px 0 0; font-weight: 600; font-size: 18px">Une tâche qui revient sans cesse</p><p style="margin: 2px 0 0; font-size: 15px; color: #3E4B44">Toujours identique, toujours les mêmes clics.</p></div>
+</div>
+<svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C7D6CD" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; align-self: center"><path d="M4 12h15M13 6l6 6-6 6"></path></svg>
+<div style="flex: 1 1 220px; min-width: 0; display: flex; gap: 14px; align-items: flex-start">
+<span style="width: 48px; height: 48px; border-radius: 50%; background: #E3EFE8; display: flex; align-items: center; justify-content: center; flex: none"><svg aria-hidden="true" width="32" height="32" viewBox="0 0 64 64" fill="none" stroke-linecap="round" stroke-linejoin="round" style="flex: none; display: block"><circle cx="28" cy="28" r="23" stroke="#16211C" stroke-width="4"></circle><path d="M28 8v3.5M48 28h-3.5M28 48v-3.5M8 28h3.5" stroke="#16211C" stroke-width="3"></path><path d="M20 23.5L28 29L37 13" stroke="#1F6B4B" stroke-width="5"></path><circle cx="28" cy="29" r="2.4" fill="#16211C"></circle><path d="M49.0 37.0L51.3 37.2L52.3 41.1L53.7 41.9L57.5 40.5L59.0 42.3L56.9 45.7L57.3 47.3L61.0 49.0L60.8 51.3L56.9 52.3L56.1 53.7L57.5 57.5L55.7 59.0L52.3 56.9L50.7 57.3L49.0 61.0L46.7 60.8L45.7 56.9L44.3 56.1L40.5 57.5L39.0 55.7L41.1 52.3L40.7 50.7L37.0 49.0L37.2 46.7L41.1 45.7L41.9 44.3L40.5 40.5L42.3 39.0L45.7 41.1L47.3 40.7Z" fill="#F6F7F4" stroke="#16211C" stroke-width="3"></path><circle cx="49" cy="49" r="3.6" fill="#1F6B4B"></circle></svg></span>
+<div><p style="margin: 0; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #1F6B4B">La solution</p><p style="margin: 2px 0 0; font-weight: 600; font-size: 18px">Un petit outil conçu pour vous</p><p style="margin: 2px 0 0; font-size: 15px; color: #3E4B44">Installé sur votre ordinateur, il fait la tâche à votre place.</p></div>
+</div>
+<svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C7D6CD" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; align-self: center"><path d="M4 12h15M13 6l6 6-6 6"></path></svg>
+<div style="flex: 1 1 220px; min-width: 0; display: flex; gap: 14px; align-items: flex-start">
+<span style="width: 48px; height: 48px; border-radius: 50%; background: #E3EFE8; display: flex; align-items: center; justify-content: center; flex: none"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1F6B4B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"></circle><path d="M12 9v4l3 2M9 2h6"></path></svg></span>
+<div><p style="margin: 0; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #1F6B4B">Le résultat</p><p style="margin: 2px 0 0; font-weight: 600; font-size: 18px">Du temps gagné chaque semaine</p><p style="margin: 2px 0 0; font-size: 15px; color: #3E4B44">Une corvée en moins, et plus de temps pour votre métier.</p></div>
+</div>
+</div>
+<ul style="margin: 0; padding: 18px 0 0; border-top: 1px dashed #C7D6CD; list-style: none; display: flex; flex-wrap: wrap; gap: 10px 32px; font-weight: 500; font-size: 16px">
+<li style="display: flex; gap: 10px; align-items: flex-start"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 22 22" fill="none" stroke="#1F6B4B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex: none; margin-top: 3px"><path d="M4 11.5l4.5 4.5L18 6.5"></path></svg><span>Prix fixe, à partir de 150 €</span></li><li style="display: flex; gap: 10px; align-items: flex-start"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 22 22" fill="none" stroke="#1F6B4B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex: none; margin-top: 3px"><path d="M4 11.5l4.5 4.5L18 6.5"></path></svg><span>Paiement si l'outil vous convient</span></li><li style="display: flex; gap: 10px; align-items: flex-start"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 22 22" fill="none" stroke="#1F6B4B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex: none; margin-top: 3px"><path d="M4 11.5l4.5 4.5L18 6.5"></path></svg><span>Fonctionne en local, sans service tiers</span></li><li style="display: flex; gap: 10px; align-items: flex-start"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 22 22" fill="none" stroke="#1F6B4B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex: none; margin-top: 3px"><path d="M4 11.5l4.5 4.5L18 6.5"></path></svg><span>Livré installé, rien à apprendre</span></li>
+</ul>
+</div>
+</section>
+
+<section style="background: #16211C; color: #F6F7F4">
+<div style="max-width: 1120px; margin: 0 auto; padding: 56px 24px; display: flex; flex-wrap: wrap; gap: 44px">
+<div style="flex: 1 1 440px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 30px; line-height: 1.15">Votre tâche peut-elle être confiée à un outil ?</h2>
+<p style="margin: 0; font-size: 18px">Si elle est longue ou répétitive, et qu'une personne très patiente, sans qualification particulière, pourrait la faire parce que les consignes ne changent jamais : oui.</p>
+<p style="margin: 0; color: #F2C14E; font-weight: 600">L'objectif : vous débarrasser de la tâche dont vous avez assez, même si elle ne prend que cinq minutes par jour.</p>
+</div>
+<div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+<p style="margin: 0; font-weight: 600; color: #F2C14E">Vous vous reconnaissez peut-être ici</p>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column">
+<li style="border-bottom: 1px solid #36453D; "><a href="#ex-bouton" style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; color: #F6F7F4; text-decoration: none"><span>Compenser un logiciel auquel il manque une fonction</span><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9D3CC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><path d="M12 5v14M6 13l6 6 6-6"></path></svg></a></li>
+<li style="border-bottom: 1px solid #36453D; "><a href="#ex-page" style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; color: #F6F7F4; text-decoration: none"><span>Retourner vérifier un site « au cas où »</span><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9D3CC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><path d="M12 5v14M6 13l6 6 6-6"></path></svg></a></li>
+<li style="border-bottom: 1px solid #36453D; "><a href="#ex-excel" style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; color: #F6F7F4; text-decoration: none"><span>Reporter des données d'un fichier à un autre</span><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9D3CC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><path d="M12 5v14M6 13l6 6 6-6"></path></svg></a></li>
+<li style="border-bottom: 1px solid #36453D; "><a href="#ex-factures" style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; color: #F6F7F4; text-decoration: none"><span>Recopier, renommer, classer des fichiers à la main</span><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9D3CC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><path d="M12 5v14M6 13l6 6 6-6"></path></svg></a></li>
+<li style="border-bottom: 1px solid #36453D; "><a href="#ex-mail" style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; color: #F6F7F4; text-decoration: none"><span>Copier-coller à la chaîne d'un logiciel à un autre</span><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9D3CC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><path d="M12 5v14M6 13l6 6 6-6"></path></svg></a></li>
+<li style="border-bottom: 1px solid #36453D; "><a href="#ex-formulaire" style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; color: #F6F7F4; text-decoration: none"><span>Remplir les mêmes formulaires, fournisseur après fournisseur</span><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9D3CC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><path d="M12 5v14M6 13l6 6 6-6"></path></svg></a></li>
+<li style="border-bottom: 1px solid #36453D; "><a href="#ex-tarif" style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; color: #F6F7F4; text-decoration: none"><span>Reporter à la main les prix d'un tarif fournisseur</span><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9D3CC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><path d="M12 5v14M6 13l6 6 6-6"></path></svg></a></li>
+<li style="border-bottom: 1px solid #36453D; "><a href="#ex-documents" style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; color: #F6F7F4; text-decoration: none"><span>Fabriquer les mêmes documents, un par personne</span><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9D3CC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><path d="M12 5v14M6 13l6 6 6-6"></path></svg></a></li>
+<li><a href="#ex-boutique" style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; color: #F6F7F4; text-decoration: none"><span>Recopier les fiches produits d'un fournisseur dans votre boutique</span><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9D3CC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><path d="M12 5v14M6 13l6 6 6-6"></path></svg></a></li>
+</ul>
+</div>
+</div>
+</section>
+
+<section id="exemples" style="max-width: 1120px; margin: 0 auto; padding: 64px 24px; display: flex; flex-direction: column; gap: 18px">
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 34px; line-height: 1.15">Neuf tâches qu'un outil peut faire à votre place</h2>
+<p style="margin: 0; color: #3E4B44">Des tâches courantes chez les indépendants et dans les petites entreprises, montrées sur des données fictives.</p>
+<p style="margin: 8px 0 0; background: #F2C14E; color: #16211C; border-radius: 12px; padding: 16px 20px; font-size: 18px; font-weight: 600">La vôtre ne ressemble à aucun de ces exemples ?<br>C'est le cas le plus fréquent : chaque outil est conçu sur mesure.</p>
+
+<article id="ex-bouton" style="display: flex; flex-wrap: wrap; flex-direction: row; gap: 36px; align-items: center; padding: 30px 0; border-top: 1px solid #D9DED8">
+<div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+<p style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px; color: #1F6B4B">Exemple 1</p>
+<h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 26px; line-height: 1.2">Le bouton qui manquait à votre logiciel</h3>
+<p style="margin: 0; color: #3E4B44"><strong style="color: #8A5A3B">Avant :</strong> votre logiciel en ligne ne sait pas sortir la liste dont vous avez besoin. Vous recopiez donc les fiches une par une dans un tableau.</p>
+<p style="margin: 0"><strong style="color: #1F6B4B">Avec l'outil :</strong> un bouton « Exporter la liste » apparaît dans la page, à côté des autres. Un clic, et le fichier est prêt. Votre logiciel n'est pas modifié.</p>
+</div>
+<div style="flex: 1 1 400px; min-width: 0"><div class="stage" role="img" aria-label="Animation : un bouton Exporter la liste apparaît dans un logiciel en ligne, un clic produit le fichier.">
+<div class="box">
+<div class="abs" style="left: 0; top: 0; width: 380px; height: 220px; border: 1px solid #DCE2DD; border-radius: 10px; overflow: hidden; background: #FFFFFF">
+<div style="height: 26px; background: #F2EFE7; border-bottom: 1px solid #E2DED4; display: flex; align-items: center; gap: 5px; padding: 0 10px"><span style="width: 7px; height: 7px; border-radius: 50%; background: #E8A598"></span><span style="width: 7px; height: 7px; border-radius: 50%; background: #F2C14E"></span><span style="width: 7px; height: 7px; border-radius: 50%; background: #9CC5A9"></span><span style="font-size: 11px; color: #4D5A53; margin-left: 6px">Votre logiciel de gestion — Clients</span></div>
+<div style="padding: 12px; display: flex; gap: 6px; flex-wrap: wrap">
+<span style="font-size: 11px; padding: 5px 9px; border: 1px solid #DCE2DD; border-radius: 5px; color: #4D5A53">+ Nouveau</span>
+<span style="font-size: 11px; padding: 5px 9px; border: 1px solid #DCE2DD; border-radius: 5px; color: #4D5A53">Rechercher</span>
+<span class="a1-btn" style="position: relative; display: inline-block; font-size: 11px; padding: 5px 9px; border-radius: 5px; color: #FFFFFF; background: #1F6B4B; font-weight: 600">⤓ Exporter la liste<span class="a1-ring" style="position: absolute; inset: -6px; border: 2px solid #F2C14E; border-radius: 9px"></span></span>
+</div>
+<div style="padding: 0 12px; display: flex; flex-direction: column; gap: 9px"><div style="height: 7px; width: 88%; background: #E6EAE5; border-radius: 4px"></div><div style="height: 7px; width: 72%; background: #E6EAE5; border-radius: 4px"></div><div style="height: 7px; width: 80%; background: #E6EAE5; border-radius: 4px"></div><div style="height: 7px; width: 64%; background: #E6EAE5; border-radius: 4px"></div><div style="height: 7px; width: 76%; background: #E6EAE5; border-radius: 4px"></div></div>
+</div>
+<div class="abs a1-file" style="right: 10px; bottom: 10px; width: 150px; background: #FFFFFF; border: 1px solid #9CC5A9; border-radius: 8px; box-shadow: 0 8px 20px rgba(22,33,28,.15); padding: 9px">
+<p style="margin: 0 0 7px; font-size: 11px; font-weight: 700; color: #1F6B4B">liste-clients.xlsx</p>
+<div style="display: flex; flex-direction: column; gap: 5px"><div class="grow" style="height: 6px; background: #9CC5A9; border-radius: 3px"></div><div class="grow d1" style="height: 6px; background: #CFE3D5; border-radius: 3px"></div><div class="grow d2" style="height: 6px; background: #CFE3D5; border-radius: 3px"></div><div class="grow d3" style="height: 6px; background: #CFE3D5; border-radius: 3px"></div></div>
+</div>
+<svg class="abs cur a1-cur" aria-hidden="true" viewBox="0 0 20 24" style="left: 236px; top: 52px"><path d="M2 2v17l4.5-4.5 3.5 7.5 3.5-1.6-3.5-7.4H16z" fill="#16211C" stroke="#FFFFFF" stroke-width="1.5" stroke-linejoin="round"></path></svg>
+</div>
+</div>
+</div>
+</article>
+
+
+<article id="ex-page" style="display: flex; flex-wrap: wrap; flex-direction: row-reverse; gap: 36px; align-items: center; padding: 30px 0; border-top: 1px solid #D9DED8">
+<div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+<p style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px; color: #1F6B4B">Exemple 2</p>
+<h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 26px; line-height: 1.2">Prévenu quand une page change</h3>
+<p style="margin: 0; color: #3E4B44"><strong style="color: #8A5A3B">Avant :</strong> vous retournez voir les mêmes pages plusieurs fois par jour ou par semaine : la fiche d'une entreprise cliente, un site d'annonces, un portail d'appels d'offres. La plupart du temps, rien n'a bougé.</p>
+<p style="margin: 0"><strong style="color: #1F6B4B">Avec l'outil :</strong> l'outil vérifie à votre place et vous alerte dès qu'un changement apparaît, en vous montrant ce qui a changé.</p>
+</div>
+<div style="flex: 1 1 400px; min-width: 0"><div class="stage" role="img" aria-label="Animation : l'outil vérifie une fiche d'entreprise, repère un changement et affiche une alerte.">
+<div class="box">
+<div class="abs" style="left: 0; top: 0; width: 380px; height: 220px; border: 1px solid #DCE2DD; border-radius: 10px; overflow: hidden; background: #FFFFFF">
+<div style="height: 26px; background: #F2EFE7; border-bottom: 1px solid #E2DED4; display: flex; align-items: center; gap: 5px; padding: 0 10px"><span style="width: 7px; height: 7px; border-radius: 50%; background: #E8A598"></span><span style="width: 7px; height: 7px; border-radius: 50%; background: #F2C14E"></span><span style="width: 7px; height: 7px; border-radius: 50%; background: #9CC5A9"></span><span style="font-size: 11px; color: #4D5A53; margin-left: 6px">Fiche entreprise — SIREN 000 000 000</span></div>
+<div style="position: relative; padding: 14px 14px; display: flex; flex-direction: column; gap: 10px; font-size: 12px">
+<div class="abs a2-scan" style="left: 0; right: 0; top: 8px; height: 2px; background: #F2C14E; box-shadow: 0 0 10px #F2C14E"></div>
+<div style="display: flex; justify-content: space-between"><span style="color: #4D5A53">Dénomination</span><span style="font-weight: 600">Atelier Dupin SARL</span></div>
+<div style="display: flex; justify-content: space-between"><span style="color: #4D5A53">Forme juridique</span><span>SARL</span></div>
+<div style="display: flex; justify-content: space-between; position: relative"><span style="color: #4D5A53">Dirigeant</span><span style="position: relative; width: 150px; text-align: right"><span class="abs a2-old" style="right: 0; top: 0">M. Paul Dupin</span><span class="abs a2-new" style="right: -4px; top: -2px; background: #FFF1C2; padding: 2px 4px; border-radius: 4px; font-weight: 700">Mme Léa Morin</span>&nbsp;</span></div>
+<div style="display: flex; justify-content: space-between"><span style="color: #4D5A53">Capital</span><span>10 000 €</span></div>
+<div style="display: flex; justify-content: space-between"><span style="color: #4D5A53">Statut</span><span style="color: #1F6B4B; font-weight: 600">Active</span></div>
+</div>
+</div>
+<div class="abs a2-toast" style="right: -6px; bottom: 6px; width: 210px; background: #16211C; color: #F6F7F4; border-radius: 10px; padding: 10px 12px; display: flex; gap: 10px; align-items: flex-start; box-shadow: 0 10px 24px rgba(22,33,28,.25)">
+<svg class="a2-bell" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F2C14E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><path d="M18 9a6 6 0 1 0-12 0c0 6-3 8-3 8h18s-3-2-3-8"></path><path d="M10 20a2 2 0 0 0 4 0"></path></svg>
+<div style="font-size: 12px; line-height: 1.35"><strong>La fiche a changé</strong><br>Nouveau dirigeant : Mme Léa Morin</div>
+</div>
+</div>
+</div></div>
+</article>
+
+
+<article id="ex-excel" style="display: flex; flex-wrap: wrap; flex-direction: row; gap: 36px; align-items: center; padding: 30px 0; border-top: 1px solid #D9DED8">
+<div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+<p style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px; color: #1F6B4B">Exemple 3</p>
+<h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 26px; line-height: 1.2">Un bouton dans Excel qui met votre tableau à jour</h3>
+<p style="margin: 0; color: #3E4B44"><strong style="color: #8A5A3B">Avant :</strong> chaque mois, vous ouvrez le relevé téléchargé depuis votre banque et reportez chaque opération dans votre tableau de suivi, catégorie par catégorie, puis vous vérifiez les totaux.</p>
+<p style="margin: 0"><strong style="color: #1F6B4B">Avec l'outil :</strong> un bouton « Mettre à jour » dans votre tableau. Il lit le relevé, range chaque ligne dans la bonne catégorie et recalcule les totaux en quelques secondes.</p>
+</div>
+<div style="flex: 1 1 400px; min-width: 0"><div class="stage" role="img" aria-label="Animation : un clic sur le bouton Mettre à jour range les lignes du relevé bancaire dans le tableau de suivi.">
+<div class="box">
+<div class="abs" style="left: 0; top: 18px; width: 150px; border: 1px solid #DCE2DD; border-radius: 8px; overflow: hidden; background: #FFFFFF; font-size: 10.5px">
+<p style="margin: 0; padding: 6px 8px; background: #EEF3FA; color: #2F4F7A; font-weight: 700">releve-banque.csv</p>
+<div style="display: flex; justify-content: space-between; padding: 5px 7px; border-bottom: 1px solid #EEF0EC"><span>PRLV EDF</span><span style="color: #4D5A53">-84,20</span></div><div style="display: flex; justify-content: space-between; padding: 5px 7px; border-bottom: 1px solid #EEF0EC"><span>CB LEROY M.</span><span style="color: #4D5A53">-46,90</span></div><div style="display: flex; justify-content: space-between; padding: 5px 7px; border-bottom: 1px solid #EEF0EC"><span>VIR CLIENT 0412</span><span style="color: #4D5A53">+620,00</span></div><div style="display: flex; justify-content: space-between; padding: 5px 7px; border-bottom: 1px solid #EEF0EC"><span>PRLV ORANGE</span><span style="color: #4D5A53">-39,99</span></div>
+</div>
+<div class="abs" style="left: 168px; top: 0; width: 212px; height: 220px; border: 1px solid #9CC5A9; border-radius: 8px; overflow: hidden; background: #FFFFFF; font-size: 10.5px">
+<div style="padding: 6px 8px; background: #E3EFE8; display: flex; justify-content: space-between; align-items: center"><span style="font-weight: 700; color: #1F6B4B">Suivi mensuel.xlsx</span><span class="a3-press" style="font-size: 10px; color: #FFFFFF; background: #1F6B4B; padding: 3px 7px; border-radius: 4px; font-weight: 600">Mettre à jour</span></div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid #E6EAE5; color: #4D5A53; font-weight: 600"><span style="padding: 5px 7px">Catégorie</span><span style="padding: 5px 7px; border-left: 1px solid #E6EAE5">Montant</span></div>
+<div style="position: relative; height: 104px">
+<div class="abs chip" style="left: 6px; top: 6px; right: 6px; display: flex; justify-content: space-between; background: #FFF1C2; padding: 5px 6px; border-radius: 4px"><span>Énergie</span><span>-84,20</span></div>
+<div class="abs chip c2" style="left: 6px; top: 38px; right: 6px; display: flex; justify-content: space-between; background: #E3EFE8; padding: 5px 6px; border-radius: 4px"><span>Matériel</span><span>-46,90</span></div>
+<div class="abs chip c3" style="left: 6px; top: 70px; right: 6px; display: flex; justify-content: space-between; background: #EEF3FA; padding: 5px 6px; border-radius: 4px"><span>Client 0412</span><span>+620,00</span></div>
+</div>
+<p class="a3-ok" style="margin: 6px 8px; padding: 6px 8px; border-radius: 6px; background: #1F6B4B; color: #FFFFFF; font-weight: 600; text-align: center">✓ Tableau à jour, totaux recalculés</p>
+</div>
+<svg class="abs cur a3-cur" aria-hidden="true" viewBox="0 0 20 24" style="left: 330px; top: 12px"><path d="M2 2v17l4.5-4.5 3.5 7.5 3.5-1.6-3.5-7.4H16z" fill="#16211C" stroke="#FFFFFF" stroke-width="1.5" stroke-linejoin="round"></path></svg>
+</div>
+</div></div>
+</article>
+
+
+<article id="ex-factures" style="display: flex; flex-wrap: wrap; flex-direction: row-reverse; gap: 36px; align-items: center; padding: 30px 0; border-top: 1px solid #D9DED8">
+<div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+<p style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px; color: #1F6B4B">Exemple 4</p>
+<h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 26px; line-height: 1.2">5 000 factures rangées en un clic</h3>
+<p style="margin: 0; color: #3E4B44"><strong style="color: #8A5A3B">Avant :</strong> des milliers de factures éparpillées dans des dossiers et sous-dossiers, avec des noms illisibles. Retrouver celle d'un client ou d'un fournisseur prend un quart d'heure.</p>
+<p style="margin: 0"><strong style="color: #1F6B4B">Avec l'outil :</strong> un clic, et chaque facture est renommée avec le numéro du client, la date et son numéro, puis rangée dans le dossier du client. Les 5 000 en quelques minutes.</p>
+</div>
+<div style="flex: 1 1 400px; min-width: 0"><div class="stage" role="img" aria-label="Animation : des factures aux noms illisibles sont renommées et rangées par numéro de client, 5 000 au total.">
+<div class="box">
+<p class="abs" style="left: 0; top: -2px; margin: 0; font-size: 11px; font-weight: 700; color: #8A5A3B">Dossiers en vrac</p>
+<div class="abs f f1" style="--tx: 232px; --ty: -6px; left: 6px; top: 10px; transform: rotate(-8deg); background: #FFFFFF; border: 1px solid #E2CFC4; border-radius: 6px; padding: 5px 8px; font-size: 11px; color: #8A5A3B; box-shadow: 0 2px 6px rgba(0,0,0,.06)">scan0031.pdf</div><div class="abs f f2" style="--tx: 218px; --ty: -48px; left: 20px; top: 58px; transform: rotate(5deg); background: #FFFFFF; border: 1px solid #E2CFC4; border-radius: 6px; padding: 5px 8px; font-size: 11px; color: #8A5A3B; box-shadow: 0 2px 6px rgba(0,0,0,.06)">doc_8842(2).pdf</div><div class="abs f f3" style="--tx: 236px; --ty: -50px; left: 2px; top: 106px; transform: rotate(-4deg); background: #FFFFFF; border: 1px solid #E2CFC4; border-radius: 6px; padding: 5px 8px; font-size: 11px; color: #8A5A3B; box-shadow: 0 2px 6px rgba(0,0,0,.06)">facture (3).pdf</div><div class="abs f f4" style="--tx: 204px; --ty: -40px; left: 34px; top: 148px; transform: rotate(7deg); background: #FFFFFF; border: 1px solid #E2CFC4; border-radius: 6px; padding: 5px 8px; font-size: 11px; color: #8A5A3B; box-shadow: 0 2px 6px rgba(0,0,0,.06)">IMG_2041.pdf</div><div class="abs f f5" style="--tx: 228px; --ty: -110px; left: 10px; top: 176px; transform: rotate(-6deg); background: #FFFFFF; border: 1px solid #E2CFC4; border-radius: 6px; padding: 5px 8px; font-size: 11px; color: #8A5A3B; box-shadow: 0 2px 6px rgba(0,0,0,.06)">Sans titre.pdf</div>
+<div class="abs" style="left: 232px; top: -6px; display: flex; align-items: center; gap: 6px; font-size: 11px; color: #4D5A53">Factures rangées :
+<span style="display: inline-block; height: 22px; overflow: hidden; font-weight: 700; color: #16211C; font-size: 13px"><span class="count" style="display: flex; flex-direction: column; line-height: 22px; transform: translateY(-88px)"><span>0</span><span>1 250</span><span>2 500</span><span>3 750</span><span>5 000</span></span></span></div>
+<div class="abs fold" style="left: 232px; top: 26px; width: 148px; display: flex; align-items: center; gap: 8px; background: #E3EFE8; border: 1px solid #9CC5A9; border-radius: 7px; padding: 7px 9px; font-size: 11.5px; font-weight: 600; color: #1F6B4B"><svg aria-hidden="true" width="18" height="16" viewBox="0 0 24 20" fill="#1F6B4B"><path d="M1 3a2 2 0 0 1 2-2h6l2 2h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2z"></path></svg>Client 0412</div><div class="abs fold" style="left: 232px; top: 70px; width: 148px; display: flex; align-items: center; gap: 8px; background: #E3EFE8; border: 1px solid #9CC5A9; border-radius: 7px; padding: 7px 9px; font-size: 11.5px; font-weight: 600; color: #1F6B4B"><svg aria-hidden="true" width="18" height="16" viewBox="0 0 24 20" fill="#1F6B4B"><path d="M1 3a2 2 0 0 1 2-2h6l2 2h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2z"></path></svg>Client 0587</div><div class="abs fold" style="left: 232px; top: 114px; width: 148px; display: flex; align-items: center; gap: 8px; background: #E3EFE8; border: 1px solid #9CC5A9; border-radius: 7px; padding: 7px 9px; font-size: 11.5px; font-weight: 600; color: #1F6B4B"><svg aria-hidden="true" width="18" height="16" viewBox="0 0 24 20" fill="#1F6B4B"><path d="M1 3a2 2 0 0 1 2-2h6l2 2h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2z"></path></svg>Client 1033</div>
+<div class="abs a4-name" style="left: 222px; top: 166px; width: 158px; background: #16211C; color: #F6F7F4; border-radius: 7px; padding: 7px 9px; font-size: 10.5px; line-height: 1.35"><span style="color: #F2C14E; font-weight: 600">Nouveau nom :</span><br>0412_2026-03-14_F1187.pdf</div>
+</div>
+</div></div>
+</article>
+
+
+<article id="ex-mail" style="display: flex; flex-wrap: wrap; flex-direction: row; gap: 36px; align-items: center; padding: 30px 0; border-top: 1px solid #D9DED8">
+<div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+<p style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px; color: #1F6B4B">Exemple 5</p>
+<h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 26px; line-height: 1.2">Du mail au tableau, sans copier-coller</h3>
+<p style="margin: 0; color: #3E4B44"><strong style="color: #8A5A3B">Avant :</strong> pour chaque demande reçue par mail, vous copiez le nom, le téléphone et la demande, puis vous les collez dans votre tableau de suivi.</p>
+<p style="margin: 0"><strong style="color: #1F6B4B">Avec l'outil :</strong> la ligne se remplit toute seule à l'arrivée du mail. Il ne vous reste qu'à relire.</p>
+</div>
+<div style="flex: 1 1 400px; min-width: 0"><div class="stage" role="img" aria-label="Animation : un mail arrive, le nom, le téléphone et la demande vont se ranger seuls dans le tableau de suivi.">
+<div class="box">
+<div class="abs a5-env" style="left: 110px; top: 0; width: 160px; background: #EEF3FA; border: 1px solid #BFD0E6; border-radius: 8px; padding: 8px 10px; font-size: 11px; color: #2F4F7A">
+<div style="display: flex; align-items: center; gap: 7px; font-weight: 700"><svg aria-hidden="true" width="18" height="14" viewBox="0 0 24 18" fill="none" stroke="#2F4F7A" stroke-width="2" stroke-linejoin="round"><rect x="1" y="1" width="22" height="16" rx="2"></rect><path d="M1 3l11 7 11-7"></path></svg>Nouvelle demande</div>
+<div style="margin-top: 6px; display: flex; flex-direction: column; gap: 4px"><div style="height: 7px; width: 90%; background: #D6E2F1; border-radius: 4px"></div><div style="height: 7px; width: 70%; background: #D6E2F1; border-radius: 4px"></div></div>
+</div>
+<div class="abs" style="left: 0; top: 96px; width: 380px; border: 1px solid #DCE2DD; border-radius: 8px; overflow: hidden; background: #FFFFFF; font-size: 11px">
+<div style="display: grid; grid-template-columns: 1fr 1fr 1.4fr; background: #F2EFE7; color: #4D5A53; font-weight: 600"><span style="padding: 6px 8px">Client</span><span style="padding: 6px 8px">Téléphone</span><span style="padding: 6px 8px">Demande</span></div>
+<div style="display: grid; grid-template-columns: 1fr 1fr 1.4fr; border-top: 1px solid #EEF0EC"><span style="padding: 6px 8px">M. Perrot</span><span style="padding: 6px 8px">06 •• 12</span><span style="padding: 6px 8px">Chauffe-eau</span></div>
+<div style="display: grid; grid-template-columns: 1fr 1fr 1.4fr; border-top: 1px solid #EEF0EC"><span style="padding: 6px 8px">Mme Loiseau</span><span style="padding: 6px 8px">07 •• 48</span><span style="padding: 6px 8px">Fuite</span></div>
+<div class="a5-row" style="position: relative; height: 30px; border-top: 1px solid #EEF0EC; background: #FFF6DA">
+<span class="abs m" style="--mx: 120px; left: 8px; top: 6px; font-weight: 700; color: #16211C">Garage Dupin</span>
+<span class="abs m m2" style="--mx: 0px; left: 128px; top: 6px; font-weight: 700; color: #16211C">02 •• 90</span>
+<span class="abs m m3" style="--mx: -110px; left: 248px; top: 6px; font-weight: 700; color: #16211C">Air comprimé</span>
+</div>
+</div>
+</div>
+</div></div>
+</article>
+
+
+<article id="ex-formulaire" style="display: flex; flex-wrap: wrap; flex-direction: row-reverse; gap: 36px; align-items: center; padding: 30px 0; border-top: 1px solid #D9DED8">
+<div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+<p style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px; color: #1F6B4B">Exemple 6</p>
+<h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 26px; line-height: 1.2">Le formulaire qui se remplit en un clic</h3>
+<p style="margin: 0; color: #3E4B44"><strong style="color: #8A5A3B">Avant :</strong> chaque nouveau fournisseur ou chaque plateforme vous redemande les mêmes informations : raison sociale, SIRET, adresse, téléphone. Vous les retapez champ par champ, à chaque fois.</p>
+<p style="margin: 0"><strong style="color: #1F6B4B">Avec l'outil :</strong> un bouton « Remplir » apparaît sur le formulaire. Un clic, et vos informations se mettent en place. Il ne reste qu'à relire, puis à envoyer.</p>
+</div>
+<div style="flex: 1 1 400px; min-width: 0"><div class="stage" role="img" aria-label="Animation : un bouton Remplir apparaît sur un formulaire en ligne, un clic remplit les champs avec les informations de l'entreprise.">
+<div class="box">
+<div class="abs" style="left: 0; top: 0; width: 380px; height: 220px; border: 1px solid #DCE2DD; border-radius: 10px; overflow: hidden; background: #FFFFFF">
+<div style="height: 26px; background: #F2EFE7; border-bottom: 1px solid #E2DED4; display: flex; align-items: center; gap: 5px; padding: 0 10px"><span style="width: 7px; height: 7px; border-radius: 50%; background: #E8A598"></span><span style="width: 7px; height: 7px; border-radius: 50%; background: #F2C14E"></span><span style="width: 7px; height: 7px; border-radius: 50%; background: #9CC5A9"></span><span style="font-size: 11px; color: #4D5A53; margin-left: 6px">Espace fournisseur — Ouverture de compte</span></div>
+<div style="padding: 9px 12px; display: flex; flex-direction: column; gap: 7px">
+<div style="display: flex; align-items: center; justify-content: space-between"><span style="font-size: 11px; font-weight: 700">Demande d'ouverture de compte</span><span class="a1-btn" style="position: relative; display: inline-block; font-size: 11px; padding: 4px 9px; border-radius: 5px; color: #FFFFFF; background: #1F6B4B; font-weight: 600">Remplir<span class="a1-ring" style="position: absolute; inset: -6px; border: 2px solid #F2C14E; border-radius: 9px"></span></span></div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px">
+<div><div style="font-size: 10px; color: #4D5A53; margin-bottom: 3px">Raison sociale</div><div class="a6-i g1" style="height: 22px; border: 1px solid #DCE2DD; border-radius: 5px; padding: 0 6px; display: flex; align-items: center; font-size: 11px; font-weight: 600"><span class="a6-t g1">Atelier Dubois</span></div></div><div><div style="font-size: 10px; color: #4D5A53; margin-bottom: 3px">SIRET</div><div class="a6-i g2" style="height: 22px; border: 1px solid #DCE2DD; border-radius: 5px; padding: 0 6px; display: flex; align-items: center; font-size: 11px; font-weight: 600"><span class="a6-t g2">123 456 789 00012</span></div></div><div><div style="font-size: 10px; color: #4D5A53; margin-bottom: 3px">Adresse</div><div class="a6-i g3" style="height: 22px; border: 1px solid #DCE2DD; border-radius: 5px; padding: 0 6px; display: flex; align-items: center; font-size: 11px; font-weight: 600"><span class="a6-t g3">12 rue des Chênes</span></div></div><div><div style="font-size: 10px; color: #4D5A53; margin-bottom: 3px">Téléphone</div><div class="a6-i g4" style="height: 22px; border: 1px solid #DCE2DD; border-radius: 5px; padding: 0 6px; display: flex; align-items: center; font-size: 11px; font-weight: 600"><span class="a6-t g4">01 99 00 45 67</span></div></div>
+</div>
+<div style="display: flex; align-items: center; gap: 6px; font-size: 10.5px; color: #4D5A53"><span style="position: relative; width: 12px; height: 12px; border: 1.5px solid #9CA9A1; border-radius: 3px; flex: none"><span class="a6-chk" style="position: absolute; inset: -1.5px; background: #1F6B4B; border-radius: 3px; display: flex; align-items: center; justify-content: center; color: #FFFFFF; font-size: 9px; font-weight: 700">✓</span></span>J'accepte les conditions générales de vente</div>
+<div style="display: flex; align-items: center; gap: 10px"><span style="font-size: 10.5px; padding: 5px 10px; border-radius: 5px; background: #E6EAE5; color: #4D5A53; font-weight: 600">Envoyer la demande</span><span class="a3-ok" style="font-size: 10.5px; font-weight: 700; color: #1F6B4B">✓ Champs remplis, à relire</span></div>
+</div>
+</div>
+<svg class="abs cur a1-cur" aria-hidden="true" viewBox="0 0 20 24" style="left: 330px; top: 40px"><path d="M2 2v17l4.5-4.5 3.5 7.5 3.5-1.6-3.5-7.4H16z" fill="#16211C" stroke="#FFFFFF" stroke-width="1.5" stroke-linejoin="round"></path></svg>
+</div>
+</div></div>
+</article>
+
+
+<article id="ex-tarif" style="display: flex; flex-wrap: wrap; flex-direction: row; gap: 36px; align-items: center; padding: 30px 0; border-top: 1px solid #D9DED8">
+<div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+<p style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px; color: #1F6B4B">Exemple 7</p>
+<h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 26px; line-height: 1.2">Le nouveau tarif fournisseur se range tout seul</h3>
+<p style="margin: 0; color: #3E4B44"><strong style="color: #8A5A3B">Avant :</strong> votre fournisseur envoie son nouveau tarif en PDF. Vous retapez les prix dans votre tableau, ligne par ligne, en cherchant ce qui a augmenté.</p>
+<p style="margin: 0"><strong style="color: #1F6B4B">Avec l'outil :</strong> un bouton « Importer le tarif » dans votre tableau. Il lit le PDF, reporte les nouveaux prix et signale les hausses. Il ne reste qu'à relire.</p>
+</div>
+<div style="flex: 1 1 400px; min-width: 0"><div class="stage" role="img" aria-label="Animation : un clic sur le bouton Importer le tarif reporte les prix d'un PDF dans le tableau et signale les hausses.">
+<div class="box">
+<div class="abs" style="left: 0; top: 18px; width: 150px; border: 1px solid #E7CFCB; border-radius: 8px; overflow: hidden; background: #FFFFFF; font-size: 10.5px">
+<p style="margin: 0; padding: 6px 8px; background: #FBEAE7; color: #9B3B2E; font-weight: 700">tarif-novembre.pdf</p>
+<div style="display: flex; justify-content: space-between; padding: 6px 7px; border-bottom: 1px solid #EEF0EC"><span>Vis inox</span><span style="color: #4D5A53">12,90</span></div><div style="display: flex; justify-content: space-between; padding: 6px 7px; border-bottom: 1px solid #EEF0EC"><span>Silicone</span><span style="color: #4D5A53">5,95</span></div><div style="display: flex; justify-content: space-between; padding: 6px 7px; border-bottom: 1px solid #EEF0EC"><span>Abrasif</span><span style="color: #4D5A53">7,50</span></div><div style="display: flex; justify-content: space-between; padding: 6px 7px; border-bottom: 1px solid #EEF0EC"><span>Charnière</span><span style="color: #4D5A53">15,20</span></div>
+</div>
+<div class="abs" style="left: 168px; top: 0; width: 212px; height: 220px; border: 1px solid #9CC5A9; border-radius: 8px; overflow: hidden; background: #FFFFFF; font-size: 10px">
+<div style="padding: 6px 8px; background: #E3EFE8; display: flex; justify-content: space-between; align-items: center"><span style="font-weight: 700; color: #1F6B4B">Mes tarifs.xlsx</span><span class="a3-press" style="font-size: 10px; color: #FFFFFF; background: #1F6B4B; padding: 3px 7px; border-radius: 4px; font-weight: 600">Importer le tarif</span></div>
+<div style="display: grid; grid-template-columns: 1.2fr .8fr .9fr .9fr; border-bottom: 1px solid #E6EAE5; color: #4D5A53; font-weight: 600"><span style="padding: 5px 6px">Article</span><span style="padding: 5px 6px">Ancien</span><span style="padding: 5px 6px">Nouveau</span><span style="padding: 5px 6px">Écart</span></div>
+<div style="display: grid; grid-template-columns: 1.2fr .8fr .9fr .9fr; align-items: center; height: 30px; border-bottom: 1px solid #EEF0EC"><span style="padding: 0 6px">Vis inox</span><span style="padding: 0 6px; color: #4D5A53">12,40</span><span style="padding: 0 6px"><span class="a7-v g1" style="display: inline-block; font-weight: 700">12,90</span></span><span style="padding: 0 6px"><span class="a7-e g1" style="display: inline-block; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; background: #FDE2DE; color: #B42318">+4,0 %</span></span></div><div style="display: grid; grid-template-columns: 1.2fr .8fr .9fr .9fr; align-items: center; height: 30px; border-bottom: 1px solid #EEF0EC"><span style="padding: 0 6px">Silicone</span><span style="padding: 0 6px; color: #4D5A53">5,60</span><span style="padding: 0 6px"><span class="a7-v g2" style="display: inline-block; font-weight: 700">5,95</span></span><span style="padding: 0 6px"><span class="a7-e g2" style="display: inline-block; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; background: #FDE2DE; color: #B42318">+6,3 %</span></span></div><div style="display: grid; grid-template-columns: 1.2fr .8fr .9fr .9fr; align-items: center; height: 30px; border-bottom: 1px solid #EEF0EC"><span style="padding: 0 6px">Abrasif</span><span style="padding: 0 6px; color: #4D5A53">7,80</span><span style="padding: 0 6px"><span class="a7-v g3" style="display: inline-block; font-weight: 700">7,50</span></span><span style="padding: 0 6px"><span class="a7-e g3" style="display: inline-block; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; background: #DCF5E7; color: #17784B">−3,8 %</span></span></div><div style="display: grid; grid-template-columns: 1.2fr .8fr .9fr .9fr; align-items: center; height: 30px; border-bottom: 1px solid #EEF0EC"><span style="padding: 0 6px">Charnière</span><span style="padding: 0 6px; color: #4D5A53">14,50</span><span style="padding: 0 6px"><span class="a7-v g4" style="display: inline-block; font-weight: 700">15,20</span></span><span style="padding: 0 6px"><span class="a7-e g4" style="display: inline-block; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 999px; background: #FDE2DE; color: #B42318">+4,8 %</span></span></div>
+<p class="a7-ok" style="margin: 8px 8px 0; padding: 6px 8px; border-radius: 6px; background: #1F6B4B; color: #FFFFFF; font-weight: 600; text-align: center">✓ 3 hausses repérées, à relire</p>
+</div>
+<svg class="abs cur a3-cur" aria-hidden="true" viewBox="0 0 20 24" style="left: 330px; top: 12px"><path d="M2 2v17l4.5-4.5 3.5 7.5 3.5-1.6-3.5-7.4H16z" fill="#16211C" stroke="#FFFFFF" stroke-width="1.5" stroke-linejoin="round"></path></svg>
+</div>
+</div></div>
+</article>
+
+
+<article id="ex-documents" style="display: flex; flex-wrap: wrap; flex-direction: row-reverse; gap: 36px; align-items: center; padding: 30px 0; border-top: 1px solid #D9DED8">
+<div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+<p style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px; color: #1F6B4B">Exemple 8</p>
+<h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 26px; line-height: 1.2">Un document par personne, créé en un clic</h3>
+<p style="margin: 0; color: #3E4B44"><strong style="color: #8A5A3B">Avant :</strong> pour chaque attestation, chaque devis ou chaque courrier, vous ouvrez le modèle, changez le nom, enregistrez le PDF, puis vous recommencez pour la ligne suivante.</p>
+<p style="margin: 0"><strong style="color: #1F6B4B">Avec l'outil :</strong> un bouton dans votre tableau crée un document par ligne, avec le bon nom, rangé dans le bon dossier. Il ne reste qu'à les relire.</p>
+</div>
+<div style="flex: 1 1 400px; min-width: 0"><div class="stage" role="img" aria-label="Animation : un clic sur le bouton Créer les attestations produit une attestation par participant, rangée dans un dossier.">
+<div class="box">
+<div class="abs" style="left: 0; top: 8px; width: 178px; border: 1px solid #9CC5A9; border-radius: 8px; overflow: hidden; background: #FFFFFF; font-size: 10.5px">
+<div style="padding: 6px 8px; background: #E3EFE8; font-weight: 700; color: #1F6B4B">Inscrits.xlsx</div>
+<div style="padding: 8px"><span class="a3-press" style="display: inline-block; font-size: 10px; color: #FFFFFF; background: #1F6B4B; padding: 4px 8px; border-radius: 4px; font-weight: 600">Créer les attestations</span></div>
+<div class="a8-r g1" style="display: flex; justify-content: space-between; padding: 6px 8px; border-top: 1px solid #EEF0EC"><span>Roux Camille</span><span style="color: #1F6B4B; font-weight: 600">Présent</span></div><div class="a8-r g2" style="display: flex; justify-content: space-between; padding: 6px 8px; border-top: 1px solid #EEF0EC"><span>Bernard Hugo</span><span style="color: #1F6B4B; font-weight: 600">Présent</span></div><div class="a8-r g3" style="display: flex; justify-content: space-between; padding: 6px 8px; border-top: 1px solid #EEF0EC"><span>Lambert Sophie</span><span style="color: #1F6B4B; font-weight: 600">Présent</span></div><div class="a8-r g4" style="display: flex; justify-content: space-between; padding: 6px 8px; border-top: 1px solid #EEF0EC"><span>Girard Paul</span><span style="color: #1F6B4B; font-weight: 600">Présent</span></div>
+</div>
+<div class="abs" style="left: 204px; top: 8px; width: 176px; height: 204px; border: 1px solid #DCE2DD; border-radius: 8px; overflow: hidden; background: #FFFFFF; font-size: 10px">
+<div style="padding: 6px 8px; background: #F2EFE7; color: #4D5A53; font-weight: 700; display: flex; align-items: center; gap: 6px"><svg aria-hidden="true" width="14" height="12" viewBox="0 0 24 20" fill="#4D5A53"><path d="M1 3a2 2 0 0 1 2-2h6l2 2h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2z"></path></svg>Attestations</div>
+<div class="a8-f g1" style="display: flex; align-items: center; gap: 7px; padding: 7px 8px; border-bottom: 1px solid #EEF0EC"><span style="font-size: 8px; font-weight: 800; color: #FFFFFF; background: #D9534F; border-radius: 3px; padding: 2px 3px">PDF</span><span>Attestation_Roux.pdf</span></div><div class="a8-f g2" style="display: flex; align-items: center; gap: 7px; padding: 7px 8px; border-bottom: 1px solid #EEF0EC"><span style="font-size: 8px; font-weight: 800; color: #FFFFFF; background: #D9534F; border-radius: 3px; padding: 2px 3px">PDF</span><span>Attestation_Bernard.pdf</span></div><div class="a8-f g3" style="display: flex; align-items: center; gap: 7px; padding: 7px 8px; border-bottom: 1px solid #EEF0EC"><span style="font-size: 8px; font-weight: 800; color: #FFFFFF; background: #D9534F; border-radius: 3px; padding: 2px 3px">PDF</span><span>Attestation_Lambert.pdf</span></div><div class="a8-f g4" style="display: flex; align-items: center; gap: 7px; padding: 7px 8px; border-bottom: 1px solid #EEF0EC"><span style="font-size: 8px; font-weight: 800; color: #FFFFFF; background: #D9534F; border-radius: 3px; padding: 2px 3px">PDF</span><span>Attestation_Girard.pdf</span></div>
+<p class="a8-ok" style="margin: 8px; padding: 6px 8px; border-radius: 6px; background: #1F6B4B; color: #FFFFFF; font-weight: 600; text-align: center">✓ 4 documents créés</p>
+</div>
+<svg class="abs cur a3-cur" aria-hidden="true" viewBox="0 0 20 24" style="left: 58px; top: 50px"><path d="M2 2v17l4.5-4.5 3.5 7.5 3.5-1.6-3.5-7.4H16z" fill="#16211C" stroke="#FFFFFF" stroke-width="1.5" stroke-linejoin="round"></path></svg>
+</div>
+</div></div>
+</article>
+
+
+<article id="ex-boutique" style="display: flex; flex-wrap: wrap; flex-direction: row; gap: 36px; align-items: center; padding: 30px 0; border-top: 1px solid #D9DED8">
+<div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+<p style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px; color: #1F6B4B">Exemple 9</p>
+<h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 26px; line-height: 1.2">La fiche produit recopiée en un clic</h3>
+<p style="margin: 0; color: #3E4B44"><strong style="color: #8A5A3B">Avant :</strong> votre fournisseur présente ses produits sur son site. Pour chaque nouveauté, vous recopiez le nom, la référence, le prix et la description dans votre boutique en ligne, champ par champ, puis vous calculez votre prix de vente.</p>
+<p style="margin: 0"><strong style="color: #1F6B4B">Avec l'outil :</strong> un bouton « Ajouter à ma boutique » apparaît sur la page du fournisseur. Un clic, et la fiche est créée chez vous, votre marge déjà appliquée. Il ne reste qu'à relire.</p>
+</div>
+<div style="flex: 1 1 400px; min-width: 0"><div class="stage" role="img" aria-label="Animation : un bouton Ajouter à ma boutique apparaît sur la fiche d'un fournisseur, un clic crée la fiche produit dans la boutique avec le prix de vente calculé.">
+<div class="box">
+<div class="abs" style="left: 0; top: 0; width: 170px; height: 220px; border: 1px solid #DCE2DD; border-radius: 10px; overflow: hidden; background: #FFFFFF; font-size: 10.5px">
+<div style="height: 24px; background: #F2EFE7; border-bottom: 1px solid #E2DED4; display: flex; align-items: center; padding: 0 8px; font-size: 10px; color: #4D5A53">Site du fournisseur — Catalogue</div>
+<div style="padding: 8px; display: flex; flex-direction: column; gap: 6px">
+<div style="height: 58px; border-radius: 6px; background: #EFE7DC; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="34" height="30" viewBox="0 0 34 30" fill="none" stroke="#8A5A3B" stroke-width="2" stroke-linejoin="round"><path d="M4 6h20v14a6 6 0 0 1-6 6h-8a6 6 0 0 1-6-6z"></path><path d="M24 10h3a4 4 0 0 1 0 8h-3"></path></svg></div>
+<span style="font-weight: 700; color: #16211C">Tasse en grès 30 cl</span>
+<span style="color: #4D5A53">Réf. TG-302</span>
+<span style="color: #4D5A53">Prix pro : 6,20 € HT</span>
+<span class="a1-btn" style="position: relative; align-self: flex-start; display: inline-block; font-size: 10.5px; padding: 5px 8px; border-radius: 5px; color: #FFFFFF; background: #1F6B4B; font-weight: 600">+ Ajouter à ma boutique<span class="a1-ring" style="position: absolute; inset: -6px; border: 2px solid #F2C14E; border-radius: 9px"></span></span>
+</div>
+</div>
+<div class="abs" style="left: 186px; top: 0; width: 194px; height: 220px; border: 1px solid #9CC5A9; border-radius: 10px; overflow: hidden; background: #FFFFFF">
+<div style="height: 24px; background: #E3EFE8; display: flex; align-items: center; padding: 0 8px; font-size: 10px; font-weight: 700; color: #1F6B4B">Ma boutique — Nouveau produit</div>
+<div style="padding: 8px; display: flex; flex-direction: column; gap: 6px">
+<div><div style="font-size: 9.5px; color: #4D5A53; margin-bottom: 2px">Nom</div><div class="a6-i g1" style="height: 20px; border: 1px solid #DCE2DD; border-radius: 5px; padding: 0 6px; display: flex; align-items: center; font-size: 10.5px; font-weight: 600"><span class="a6-t g1">Tasse en grès 30 cl</span></div></div><div><div style="font-size: 9.5px; color: #4D5A53; margin-bottom: 2px">Référence</div><div class="a6-i g2" style="height: 20px; border: 1px solid #DCE2DD; border-radius: 5px; padding: 0 6px; display: flex; align-items: center; font-size: 10.5px; font-weight: 600"><span class="a6-t g2">TG-302</span></div></div><div><div style="font-size: 9.5px; color: #4D5A53; margin-bottom: 2px">Prix de vente TTC</div><div class="a6-i g3" style="height: 20px; border: 1px solid #DCE2DD; border-radius: 5px; padding: 0 6px; display: flex; align-items: center; font-size: 10.5px; font-weight: 600"><span class="a6-t g3">16,40 € (marge appliquée)</span></div></div><div><div style="font-size: 9.5px; color: #4D5A53; margin-bottom: 2px">Description</div><div class="a6-i g4" style="height: 20px; border: 1px solid #DCE2DD; border-radius: 5px; padding: 0 6px; display: flex; align-items: center; font-size: 10.5px; font-weight: 600"><span class="a6-t g4">Grès émaillé, passe au lave-vaisselle</span></div></div>
+<p class="a3-ok" style="margin: 2px 0 0; padding: 5px 8px; border-radius: 6px; background: #1F6B4B; color: #FFFFFF; font-size: 10.5px; font-weight: 600; text-align: center">✓ Fiche créée, à relire</p>
+</div>
+</div>
+<svg class="abs cur a1-cur" aria-hidden="true" viewBox="0 0 20 24" style="left: 100px; top: 172px"><path d="M2 2v17l4.5-4.5 3.5 7.5 3.5-1.6-3.5-7.4H16z" fill="#16211C" stroke="#FFFFFF" stroke-width="1.5" stroke-linejoin="round"></path></svg>
+</div>
+</div></div>
+</article>
+
+
+<div style="background: #16211C; color: #F6F7F4; border-radius: 14px; padding: 28px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; margin-top: 12px">
+<div style="flex: 1 1 420px; min-width: 0"><h3 style="margin: 0 0 6px; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 22px">Et chez vous ?</h3><p style="margin: 0; color: #C9D3CC">Décrivez la tâche qui vous agace, avec vos mots. Savoir si elle s'automatise, c'est justement l'objet du premier échange.</p></div>
+<a href="#contact" style="background: #F2C14E; color: #16211C; text-decoration: none; padding: 14px 20px; border-radius: 8px; font-weight: 600">Décrire ma tâche</a>
+</div>
+</section>
+
+<section id="prix" style="background: #E3EFE8">
+<div style="max-width: 1120px; margin: 0 auto; padding: 64px 24px; display: flex; flex-wrap: wrap; gap: 48px">
+<div style="flex: 1 1 340px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 34px; line-height: 1.15">Prix et déroulement</h2>
+<p style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 46px; line-height: 1.05">À partir de 150 €</p>
+<p style="margin: 0; color: #2C3A33">Un prix fixe, connu avant de commencer, réglé une fois à la livraison. Sans abonnement.</p>
+<p style="margin: 0; background: #FFFFFF; border-radius: 12px; padding: 14px 16px; font-size: 16px"><strong>Tout ne s'automatise pas :</strong> vous en êtes informé avant de commencer. Les ajustements des 7 premiers jours sont inclus.</p>
+<a href="#contact" style="align-self: flex-start; background: #1F6B4B; color: #FFFFFF; text-decoration: none; padding: 14px 22px; border-radius: 8px; font-weight: 600">Décrire ma tâche</a>
+</div>
+<ol style="flex: 1 1 440px; min-width: 0; margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 18px">
+<li style="display: flex; gap: 14px; align-items: flex-start"><span style="flex: none; width: 34px; height: 34px; border-radius: 50%; background: #1F6B4B; color: #FFFFFF; font-family: 'Space Grotesk', sans-serif; font-weight: 700; display: flex; align-items: center; justify-content: center">1</span><div><p style="margin: 0; font-weight: 600">Vous décrivez la tâche qui vous pèse</p><p style="margin: 2px 0 0; font-size: 15px; color: #3E4B44">Même sans savoir ce qui peut être automatisé.</p></div></li>
+<li style="display: flex; gap: 14px; align-items: flex-start"><span style="flex: none; width: 34px; height: 34px; border-radius: 50%; background: #1F6B4B; color: #FFFFFF; font-family: 'Space Grotesk', sans-serif; font-weight: 700; display: flex; align-items: center; justify-content: center">2</span><div><p style="margin: 0; font-weight: 600">Nous convenons d'un entretien téléphonique</p><p style="margin: 2px 0 0; font-size: 15px; color: #3E4B44">Gratuit, pour voir ensemble ce qui peut être fait.</p></div></li>
+<li style="display: flex; gap: 14px; align-items: flex-start"><span style="flex: none; width: 34px; height: 34px; border-radius: 50%; background: #1F6B4B; color: #FFFFFF; font-family: 'Space Grotesk', sans-serif; font-weight: 700; display: flex; align-items: center; justify-content: center">3</span><div><p style="margin: 0; font-weight: 600">Vous recevez une proposition écrite</p><p style="margin: 2px 0 0; font-size: 15px; color: #3E4B44">Avec le prix fixe et la date.</p></div></li>
+<li style="display: flex; gap: 14px; align-items: flex-start"><span style="flex: none; width: 34px; height: 34px; border-radius: 50%; background: #1F6B4B; color: #FFFFFF; font-family: 'Space Grotesk', sans-serif; font-weight: 700; display: flex; align-items: center; justify-content: center">4</span><div><p style="margin: 0; font-weight: 600">L'outil est testé avec vous</p><p style="margin: 2px 0 0; font-size: 15px; color: #3E4B44">Sur vos cas réels.</p></div></li>
+<li style="display: flex; gap: 14px; align-items: flex-start"><span style="flex: none; width: 34px; height: 34px; border-radius: 50%; background: #1F6B4B; color: #FFFFFF; font-family: 'Space Grotesk', sans-serif; font-weight: 700; display: flex; align-items: center; justify-content: center">5</span><div><p style="margin: 0; font-weight: 600">Vous payez s'il vous convient</p><p style="margin: 2px 0 0; font-size: 15px; color: #3E4B44">Sinon, vous ne devez rien.</p></div></li>
+</ol>
+</div>
+</section>
+
+<section id="chez-vous" style="max-width: 1120px; margin: 0 auto; padding: 64px 24px; display: flex; flex-direction: column; gap: 24px">
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 34px; line-height: 1.15">Un outil qui vous appartient</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 18px">
+<div style="flex: 1 1 240px; min-width: 0; background: #FFFFFF; border: 1px solid #D9DED8; border-radius: 14px; padding: 20px"><p style="margin: 0 0 6px; font-weight: 600">En local</p><p style="margin: 0; font-size: 16px; color: #3E4B44">Vos informations ne passent par aucun service tiers.</p></div>
+<div style="flex: 1 1 240px; min-width: 0; background: #FFFFFF; border: 1px solid #D9DED8; border-radius: 14px; padding: 20px"><p style="margin: 0 0 6px; font-weight: 600">Des règles fixes</p><p style="margin: 0; font-size: 16px; color: #3E4B44">Il fait la même chose à chaque fois, sans surprise.</p></div>
+<div style="flex: 1 1 240px; min-width: 0; background: #FFFFFF; border: 1px solid #D9DED8; border-radius: 14px; padding: 20px"><p style="margin: 0 0 6px; font-weight: 600">Payé une fois</p><p style="margin: 0; font-size: 16px; color: #3E4B44">Sans abonnement, il est à vous et le reste.</p></div>
+<div style="flex: 1 1 240px; min-width: 0; background: #FFFFFF; border: 1px solid #D9DED8; border-radius: 14px; padding: 20px"><p style="margin: 0 0 6px; font-weight: 600">Vos données, votre choix</p><p style="margin: 0; font-size: 16px; color: #3E4B44">Pendant la conception : accès direct, quelques échantillons ou échantillons anonymisés.</p></div>
+</div>
+</section>
+
+<section id="qui" style="background: #E3EFE8">
+<div style="max-width: 1120px; margin: 0 auto; padding: 64px 24px; display: flex; flex-wrap: wrap; gap: 40px; align-items: center">
+<img src="benoit-portrait.jpg" alt="Benoît Verdier, fondateur de TacTic Solutions, à son bureau" width="300" height="402" onerror="this.outerHTML='<div style=&quot;flex:0 1 300px;min-width:0;aspect-ratio:720/964;width:300px;max-width:100%;border-radius:16px;background:#C7D6CD;display:flex;align-items:center;justify-content:center;color:#2C3A33;font-size:15px&quot;>Photo à venir</div>'" style="flex: 0 1 300px; min-width: 0; max-width: 100%; height: auto; aspect-ratio: 720 / 964; object-fit: cover; border-radius: 16px; box-shadow: 0 12px 30px rgba(22,33,28,.12)">
+<div style="flex: 1 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 34px; line-height: 1.15">Qui je suis</h2>
+<p style="margin: 0; font-size: 18px">Je m'appelle Benoît Verdier, je vis à Nantes. Ingénieur de formation, j'aborde chaque problème avec méthode : comprendre comment le travail se fait vraiment, étape par étape, avant de chercher ce qui peut être automatisé.</p>
+<p style="margin: 0; color: #2C3A33">Depuis des années, je suis aussi traducteur indépendant. Mon métier consiste à saisir une idée exprimée dans une langue et à la restituer fidèlement dans une autre. Il m'a appris à entrer très vite dans des outils métiers et des façons de travailler propres à chacun de mes clients.</p>
+<p style="margin: 0; color: #2C3A33">J'ai d'abord conçu ces outils et ces automatisations pour moi. Je connais la frustration de perdre du temps sur des tâches ennuyeuses, ou de travailler avec un logiciel auquel il manque toujours la petite fonction qui simplifierait tout. Régler ces problèmes par de petits ajouts me procure une vraie satisfaction, et j'ai envie de la faire découvrir à d'autres professionnels.</p>
+<p style="margin: 0; font-weight: 600">Par mail, par téléphone, en visio, ou sur place si nécessaire · 06 00 00 00 00 · contact@tacticsolutions.fr <span style="font-weight: 400; font-size: 14px; color: #4D5A53">(fictifs)</span></p>
+<a href="#contact" style="align-self: flex-start; background: #1F6B4B; color: #FFFFFF; text-decoration: none; padding: 14px 22px; border-radius: 8px; font-weight: 600">Décrire ma tâche</a>
+</div>
+</div>
+</section>
+
+<section id="questions" style="max-width: 800px; margin: 0 auto; padding: 64px 24px 24px; display: flex; flex-direction: column; gap: 6px">
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 34px; line-height: 1.15; margin-bottom: 12px">Questions fréquentes</h2>
+<details open style="border-bottom: 1px solid #D9DED8; padding: 12px 0"><summary style="font-weight: 600; font-size: 18px; padding: 6px 0">Concrètement, qu'est-ce que je reçois ?</summary><p style="margin: 10px 0 0; color: #3E4B44">Un petit programme installé sur votre ordinateur, qui fait la tâche à votre place. Le plus souvent, il prend la forme d'un bouton ajouté dans votre navigateur internet (Chrome, Edge, Firefox…) : on parle alors d'« extension ». Il peut aussi s'agir d'un bouton dans votre fichier Excel. Vous cliquez, la tâche se fait. L'installation est comprise.</p></details>
+<details style="border-bottom: 1px solid #D9DED8; padding: 12px 0"><summary style="font-weight: 600; font-size: 18px; padding: 6px 0">Combien ça coûte ?</summary><p style="margin: 10px 0 0; color: #3E4B44">À partir de 150 €. La plupart des outils coûtent entre 200 et 600 €. Le prix est fixé avant de commencer, et réglé à la livraison si l'outil vous convient.</p></details>
+<details style="border-bottom: 1px solid #D9DED8; padding: 12px 0"><summary style="font-weight: 600; font-size: 18px; padding: 6px 0">Et si ma tâche demande une intelligence artificielle ?</summary><p style="margin: 10px 0 0; color: #3E4B44">Certaines tâches en ont besoin, par exemple comprendre un message rédigé librement. Si c'est le cas de la vôtre, vous en serez informé avant de commencer.</p></details>
+<details style="border-bottom: 1px solid #D9DED8; padding: 12px 0"><summary style="font-weight: 600; font-size: 18px; padding: 6px 0">Mes informations partent-elles quelque part ?</summary><p style="margin: 10px 0 0; color: #3E4B44">Non. L'outil fonctionne en local, sur votre ordinateur, sans passer par un service tiers.</p></details>
+<details style="border-bottom: 1px solid #D9DED8; padding: 12px 0"><summary style="font-weight: 600; font-size: 18px; padding: 6px 0">Je ne saurais pas expliquer ce dont j'ai besoin.</summary><p style="margin: 10px 0 0; color: #3E4B44">Aucun vocabulaire technique n'est nécessaire : décrivez simplement ce que vous faites et ce qui vous agace. Pendant l'entretien téléphonique, quelques questions simples suffisent à cerner le besoin, avec un partage d'écran si c'est plus parlant.</p></details>
+<details style="border-bottom: 1px solid #D9DED8; padding: 12px 0"><summary style="font-weight: 600; font-size: 18px; padding: 6px 0">Mon logiciel fait déjà tout.</summary><p style="margin: 10px 0 0; color: #3E4B44">Souvent vrai. La question porte sur ce que vous faites à la main autour : recopier, vérifier, remettre en forme, importer des données.</p></details>
+<details style="padding: 12px 0"><summary style="font-weight: 600; font-size: 18px; padding: 6px 0">Je ne suis pas à l'aise avec l'informatique.</summary><p style="margin: 10px 0 0; color: #3E4B44">Aucun souci : vous n'avez rien à apprendre ni à régler. L'outil est livré installé et prêt à servir. Un clic sur le bouton, et la tâche est faite.</p></details>
+</section>
+
+<section id="contact" style="max-width: 1120px; margin: 0 auto; padding: 48px 24px 72px; display: flex; flex-wrap: wrap; gap: 44px">
+<div style="flex: 1 1 340px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 34px; line-height: 1.15">Qu'est-ce qui vous prend du temps ?</h2>
+<p style="margin: 0; color: #3E4B44">Quelques mots suffisent, sans vocabulaire technique. Réponse personnelle sous 72 heures.</p>
+<p style="margin: 0; color: #3E4B44">Vous préférez parler ? <strong style="color: #16211C">06 00 00 00 00</strong></p>
+</div>
+<form onsubmit="return false" style="flex: 1 1 440px; min-width: 0; background: #FFFFFF; border: 1px solid #D9DED8; border-radius: 14px; padding: 26px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="l-tache" style="font-weight: 600; font-size: 16px">La tâche qui vous pèse</label><textarea id="l-tache" name="tache" rows="4" placeholder="Chaque lundi, je recopie…" style="font: inherit; padding: 14px; border: 1px solid #8A968F; border-radius: 8px; background: #FFFFFF; color: #16211C; resize: vertical"></textarea></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="l-adresse" style="font-weight: 600; font-size: 16px">Votre adresse mail ou votre téléphone</label><input id="l-adresse" name="adresse" type="text" style="font: inherit; padding: 14px; border: 1px solid #8A968F; border-radius: 8px; background: #FFFFFF; color: #16211C"></div>
+<button type="button" style="font: inherit; font-weight: 600; font-size: 18px; background: #1F6B4B; color: #FFFFFF; border: none; border-radius: 8px; padding: 16px 24px; cursor: pointer">Envoyer</button>
+<p style="margin: 0; font-size: 14px; color: #4D5A53">Vos informations servent uniquement à vous répondre.</p>
+</form>
+</section>
+
+<footer style="background: #16211C; color: #C9D3CC; font-size: 15px">
+<div style="max-width: 1120px; margin: 0 auto; padding: 28px 24px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px">
+<div style="display: flex; align-items: center; gap: 12px"><svg aria-hidden="true" width="34" height="34" viewBox="0 0 64 64" fill="none" stroke-linecap="round" stroke-linejoin="round" style="flex: none; display: block"><circle cx="28" cy="28" r="23" stroke="#F6F7F4" stroke-width="4"></circle><path d="M28 8v3.5M48 28h-3.5M28 48v-3.5M8 28h3.5" stroke="#F6F7F4" stroke-width="3"></path><path d="M20 23.5L28 29L37 13" stroke="#F2C14E" stroke-width="5"></path><circle cx="28" cy="29" r="2.4" fill="#F6F7F4"></circle><path d="M49.0 37.0L51.3 37.2L52.3 41.1L53.7 41.9L57.5 40.5L59.0 42.3L56.9 45.7L57.3 47.3L61.0 49.0L60.8 51.3L56.9 52.3L56.1 53.7L57.5 57.5L55.7 59.0L52.3 56.9L50.7 57.3L49.0 61.0L46.7 60.8L45.7 56.9L44.3 56.1L40.5 57.5L39.0 55.7L41.1 52.3L40.7 50.7L37.0 49.0L37.2 46.7L41.1 45.7L41.9 44.3L40.5 40.5L42.3 39.0L45.7 41.1L47.3 40.7Z" fill="#16211C" stroke="#F6F7F4" stroke-width="3"></path><circle cx="49" cy="49" r="3.6" fill="#F2C14E"></circle></svg><p style="margin: 0">TacTic Solutions — Benoît Verdier, Nantes · SIREN 000 000 000</p></div>
+<p style="margin: 0"><a href="#contact" style="color: #F6F7F4">Contact</a> · [MENTIONS LÉGALES] · [CONFIDENTIALITÉ]</p>
+</div>
+</footer>
+
+</div>
+</body>
+</html>
