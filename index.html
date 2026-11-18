@@ -507,12 +507,36 @@ summary{cursor:pointer}
 <p style="margin: 0; color: #3E4B44">Quelques mots suffisent, sans vocabulaire technique. Réponse personnelle sous 72 heures.</p>
 <p style="margin: 0; color: #3E4B44">Vous préférez parler ? <strong style="color: #16211C">06 00 00 00 00</strong></p>
 </div>
-<form onsubmit="return false" style="flex: 1 1 440px; min-width: 0; background: #FFFFFF; border: 1px solid #D9DED8; border-radius: 14px; padding: 26px; display: flex; flex-direction: column; gap: 16px">
-<div style="display: flex; flex-direction: column; gap: 6px"><label for="l-tache" style="font-weight: 600; font-size: 16px">La tâche qui vous pèse</label><textarea id="l-tache" name="tache" rows="4" placeholder="Chaque lundi, je recopie…" style="font: inherit; padding: 14px; border: 1px solid #8A968F; border-radius: 8px; background: #FFFFFF; color: #16211C; resize: vertical"></textarea></div>
-<div style="display: flex; flex-direction: column; gap: 6px"><label for="l-adresse" style="font-weight: 600; font-size: 16px">Votre adresse mail ou votre téléphone</label><input id="l-adresse" name="adresse" type="text" style="font: inherit; padding: 14px; border: 1px solid #8A968F; border-radius: 8px; background: #FFFFFF; color: #16211C"></div>
-<button type="button" style="font: inherit; font-weight: 600; font-size: 18px; background: #1F6B4B; color: #FFFFFF; border: none; border-radius: 8px; padding: 16px 24px; cursor: pointer">Envoyer</button>
+<form id="contact-form" action="https://api.web3forms.com/submit" method="POST" style="flex: 1 1 440px; min-width: 0; background: #FFFFFF; border: 1px solid #D9DED8; border-radius: 14px; padding: 26px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="l-tache" style="font-weight: 600; font-size: 16px">La tâche qui vous pèse</label><textarea id="l-tache" name="tache" rows="4" required placeholder="Chaque lundi, je recopie…" style="font: inherit; padding: 14px; border: 1px solid #8A968F; border-radius: 8px; background: #FFFFFF; color: #16211C; resize: vertical"></textarea></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="l-adresse" style="font-weight: 600; font-size: 16px">Votre adresse mail ou votre téléphone</label><input id="l-adresse" name="adresse" type="text" required style="font: inherit; padding: 14px; border: 1px solid #8A968F; border-radius: 8px; background: #FFFFFF; color: #16211C"></div>
+<input type="hidden" name="access_key" value="6dcacf60-4709-45fa-8466-7558c5fd14c4">
+<input type="hidden" name="subject" value="Nouvelle demande depuis tacticsolutions.fr">
+<input type="hidden" name="from_name" value="Site TacTic Solutions">
+<input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="display: none">
+<button type="submit" style="font: inherit; font-weight: 600; font-size: 18px; background: #1F6B4B; color: #FFFFFF; border: none; border-radius: 8px; padding: 16px 24px; cursor: pointer">Envoyer</button>
+<p id="contact-status" role="status" aria-live="polite" style="margin: 0; font-weight: 600"></p>
 <p style="margin: 0; font-size: 14px; color: #4D5A53">Vos informations servent uniquement à vous répondre.</p>
 </form>
+<script>
+(function(){
+  var f=document.getElementById('contact-form'), st=document.getElementById('contact-status');
+  if(!f) return;
+  f.addEventListener('submit', function(e){
+    e.preventDefault();
+    var b=f.querySelector('button[type=submit]'); b.disabled=true; b.textContent='Envoi…';
+    st.style.color='#3E4B44'; st.textContent='';
+    fetch(f.action,{method:'POST',headers:{'Accept':'application/json'},body:new FormData(f)})
+      .then(function(r){return r.json();})
+      .then(function(d){
+        if(d.success){ st.style.color='#1F6B4B'; st.textContent='Merci, votre message est bien parti. Réponse personnelle sous 72 heures.'; f.reset(); }
+        else { throw new Error(d.message||'erreur'); }
+      })
+      .catch(function(){ st.style.color='#B42318'; st.textContent="L'envoi n'a pas abouti. Écrivez directement à contact@tacticsolutions.fr."; })
+      .finally(function(){ b.disabled=false; b.textContent='Envoyer'; });
+  });
+})();
+</script>
 </section>
 
 <footer style="background: #16211C; color: #C9D3CC; font-size: 15px">
