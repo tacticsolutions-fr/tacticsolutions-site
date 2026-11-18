@@ -526,7 +526,8 @@ summary{cursor:pointer}
     e.preventDefault();
     var b=f.querySelector('button[type=submit]'); b.disabled=true; b.textContent='Envoi…';
     st.style.color='#3E4B44'; st.textContent='';
-    fetch(f.action,{method:'POST',headers:{'Accept':'application/json'},body:new FormData(f)})
+    var fd=new FormData(f); var a=(f.adresse.value||'').trim(); if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(a)){ fd.append('email',a); }
+    fetch(f.action,{method:'POST',headers:{'Accept':'application/json'},body:fd})
       .then(function(r){return r.json();})
       .then(function(d){
         if(d.success){ st.style.color='#1F6B4B'; st.textContent='Merci, votre message est bien parti. Réponse personnelle sous 72 heures.'; f.reset(); }
